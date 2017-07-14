@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/philippkrauss/cartoongrabber.svg?branch=master)](https://travis-ci.org/philippkrauss/cartoongrabber)
+
 # cartoongrabber
 The main purpose of this project is to learn [spring-integration](https://projects.spring.io/spring-integration) and 
 have some fun in the process. Therefore we came up with the idea of creating a cartoon grabber.
