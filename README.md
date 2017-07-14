@@ -6,7 +6,7 @@ The idea is to grab cartoons from a number of configurable sources (like e.g. di
 process them in a number of backends. 
 
 This is the first sketch of how the grabber should work:
-![initial design](doc/img/initialdesign.jpg?raw=true "initial design")
+![initial design](https://github.com/philippkrauss/cartoongrabber/blob/master/doc/img/initialdesign.JPG "initial design")
 
 To build the project, execute `gradlew build`
 
