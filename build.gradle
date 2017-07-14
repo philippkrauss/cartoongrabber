@@ -1,0 +1,27 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.slf4j:jcl-over-slf4j:1.7.21"
+    compile "ch.qos.logback:logback-classic:1.1.7"
+    compile "org.springframework.integration:spring-integration-core:${springVersion}"
+    compile "org.springframework.integration:spring-integration-ws:${springVersion}"
+    compile "org.springframework.integration:spring-integration-xml:${springVersion}"
+    testCompile "junit:junit:4.12"
+}
+
+jar {
+    baseName = 'cartoongrabber'
+    version =  '0.1.0'
+}
+
+apply plugin: 'application'
+
+mainClassName = 'cartoongrabber.Main'
