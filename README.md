@@ -10,4 +10,4 @@ This is the first sketch of how the grabber should work:
 
 To build the project, execute `gradlew build`
 
-To run the project, execute `gradlew run`
+To run the project, execute `gradlew run` 
