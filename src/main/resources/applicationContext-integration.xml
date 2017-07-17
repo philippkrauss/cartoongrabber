@@ -2,34 +2,35 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:int="http://www.springframework.org/schema/integration"
-       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
-		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
+    <context:property-placeholder location="classpath:applicationContext.properties" />
 
     <int:gateway id="grabberService"
-             service-interface="cartoongrabber.service.GrabberService"
-             default-request-channel="grabberChannel"/>
+                 service-interface="cartoongrabber.service.GrabberService"
+                 default-request-channel="inputChannel"/>
 
-    <int:channel id="grabberChannel" />
-    <int:channel id="enrichedGrabberChannel" />
+    <int:channel id="inputChannel"/>
 
-    <int:header-enricher input-channel="grabberChannel" output-channel="enrichedGrabberChannel">
-        <int:header name="baseUrl" expression="payload"/>
-    </int:header-enricher>
+    <int:transformer input-channel="inputChannel" output-channel="definitionChannel">
+        <beans:bean class="cartoongrabber.transformer.SourceToDefinitionTransformer"/>
+    </int:transformer>
 
-    <int-http:outbound-gateway request-channel="enrichedGrabberChannel"
-                               reply-channel="textChannel"
-                               url="{baseUrl}"
-                               http-method="GET"
-                               expected-response-type="java.lang.String">
-        <int-http:uri-variable name="baseUrl" expression="headers.get('baseUrl')" />
-    </int-http:outbound-gateway>
+    <int:channel id="definitionChannel"/>
 
+    <int:transformer input-channel="definitionChannel" output-channel="cartoonChannel">
+        <beans:bean class="cartoongrabber.transformer.DefinitionToCartoonTransformer"/>
+    </int:transformer>
 
-    <int:channel id="textChannel"/>
-    <int:service-activator ref="textPrinter" input-channel="textChannel" />
+    <int:channel id="cartoonChannel"/>
+
+    <int:service-activator input-channel="cartoonChannel">
+        <bean class="cartoongrabber.service.FileCollection">
+            <constructor-arg value="${conf.filecollection.baseDir}" />
+        </bean>
+    </int:service-activator>
 
 </beans>
