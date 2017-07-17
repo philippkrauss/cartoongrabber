@@ -19,7 +19,7 @@ public class CartoonGrabberCli {
     }
 
     public void run(String[] args) {
-        String argument = "default";
+        String argument = "http://dilbert.com/strip/2017-07-14";
         if (args.length == 1) {
             argument = args[0];
         }

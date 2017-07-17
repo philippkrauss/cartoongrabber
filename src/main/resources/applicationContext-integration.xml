@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:int="http://www.springframework.org/schema/integration"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/integration
-       http://www.springframework.org/schema/integration/spring-integration.xsd
-       http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:int="http://www.springframework.org/schema/integration"
+       xmlns:int-http="http://www.springframework.org/schema/integration/http"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http.xsd">
+
 
 
     <int:gateway id="grabberService"
@@ -13,6 +14,22 @@
              default-request-channel="grabberChannel"/>
 
     <int:channel id="grabberChannel" />
+    <int:channel id="enrichedGrabberChannel" />
 
-    <int:service-activator ref="helloService" input-channel="grabberChannel" />
+    <int:header-enricher input-channel="grabberChannel" output-channel="enrichedGrabberChannel">
+        <int:header name="baseUrl" expression="payload"/>
+    </int:header-enricher>
+
+    <int-http:outbound-gateway request-channel="enrichedGrabberChannel"
+                               reply-channel="textChannel"
+                               url="{baseUrl}"
+                               http-method="GET"
+                               expected-response-type="java.lang.String">
+        <int-http:uri-variable name="baseUrl" expression="headers.get('baseUrl')" />
+    </int-http:outbound-gateway>
+
+
+    <int:channel id="textChannel"/>
+    <int:service-activator ref="textPrinter" input-channel="textChannel" />
+
 </beans>
