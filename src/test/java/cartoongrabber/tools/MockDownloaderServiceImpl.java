@@ -1,8 +1,7 @@
-package cartoongrabber.transformer;
+package cartoongrabber.tools;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,9 +12,9 @@ import java.util.Queue;
  */
 public class MockDownloaderServiceImpl implements UrlDownloaderService {
 
-    private List<URL> urls = new ArrayList<>();
+    private final List<URL> urls = new ArrayList<>();
 
-    private Queue<byte[]> content = new LinkedList<>();
+    private final Queue<byte[]> content = new LinkedList<>();
 
     public void addContent(byte[] content) {
         this.content.add(content);

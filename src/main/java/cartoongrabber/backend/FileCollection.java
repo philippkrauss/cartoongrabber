@@ -1,4 +1,4 @@
-package cartoongrabber.service;
+package cartoongrabber.backend;
 
 import cartoongrabber.model.CartoonStrip;
 import org.slf4j.Logger;
@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
+ * File based implementation of {@link CartoonCollectionService].
  * Created by Philipp Krauß on 17.07.2017.
  */
 public class FileCollection implements CartoonCollectionService {

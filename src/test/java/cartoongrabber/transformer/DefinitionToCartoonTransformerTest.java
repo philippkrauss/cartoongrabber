@@ -2,6 +2,7 @@ package cartoongrabber.transformer;
 
 import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.model.SourceDefinition;
+import cartoongrabber.tools.MockDownloaderServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,10 +32,10 @@ public class DefinitionToCartoonTransformerTest {
     private DefinitionToCartoonTransformer transformer;
 
     @Autowired
-    MockDownloaderServiceImpl mockDownloaderService;
+    private MockDownloaderServiceImpl mockDownloaderService;
 
     private SourceDefinition source = null;
-    private BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_INDEXED);
+    private final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_INDEXED);
 
     @Before
     public void setUp() throws Exception {

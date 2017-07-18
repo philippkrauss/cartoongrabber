@@ -7,6 +7,9 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+ext {
+    springVersion = '4.3.9.RELEASE'
+}
 dependencies {
     compile "org.springframework:spring-context:${springVersion}"
     compile "org.slf4j:jcl-over-slf4j:1.7.21"

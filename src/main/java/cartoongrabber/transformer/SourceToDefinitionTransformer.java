@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Transformer component that transforms a cartoon name into its {@link SourceDefinition}
  * Created by Philipp Krauß on 17.07.2017.
  */
 public class SourceToDefinitionTransformer {

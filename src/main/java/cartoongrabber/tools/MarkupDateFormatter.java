@@ -1,6 +1,5 @@
-package cartoongrabber.transformer;
+package cartoongrabber.tools;
 
-import cartoongrabber.service.DateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Formats a String that contains occurrences of time patterns. Time patterns have to be marked using '<' and '>'
+ * brackets. Uses a {@link DateTimeFormatter} to format the subsections of the string and a {@link DateService} to get
+ * the date.
  * Created by Philipp Krauß on 17.07.2017.
  */
 @Component
 public class MarkupDateFormatter {
 
-    private Logger log = LoggerFactory.getLogger(MarkupDateFormatter.class);
+    private final Logger log = LoggerFactory.getLogger(MarkupDateFormatter.class);
 
     private final DateService dateService;
 

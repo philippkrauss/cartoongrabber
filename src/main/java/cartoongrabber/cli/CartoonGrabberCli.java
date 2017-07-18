@@ -4,12 +4,6 @@ import cartoongrabber.service.GrabberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-
 /**
  * This class is responsible for CLI parsing and invocation of the grabber service.
  * Created by Philipp Krauß on 14.07.2017.

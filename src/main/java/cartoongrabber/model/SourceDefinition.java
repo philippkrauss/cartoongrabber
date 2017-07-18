@@ -1,10 +1,11 @@
 package cartoongrabber.model;
 
 /**
+ * Shared model class that represents the definition of a cartoon source.
  * Created by Philipp Krauß on 17.07.2017.
  */
 public class SourceDefinition {
-    public final String name;
+    private final String name;
     private final String baseUrl;
     private final String imagePattern;
 

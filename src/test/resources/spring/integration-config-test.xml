@@ -8,12 +8,12 @@
 
     <context:component-scan base-package="cartoongrabber"/>
 
-    <bean id="dateService" class="cartoongrabber.service.MockDateServiceImpl">
+    <bean id="dateService" class="cartoongrabber.tools.MockDateServiceImpl">
         <constructor-arg value="2000" />
         <constructor-arg value="1" />
         <constructor-arg value="25" />
     </bean>
 
-    <bean id="downloaderService" class="cartoongrabber.transformer.MockDownloaderServiceImpl"/>
+    <bean id="downloaderService" class="cartoongrabber.tools.MockDownloaderServiceImpl"/>
 
 </beans>

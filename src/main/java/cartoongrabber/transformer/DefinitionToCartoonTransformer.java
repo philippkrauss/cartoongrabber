@@ -2,6 +2,8 @@ package cartoongrabber.transformer;
 
 import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.model.SourceDefinition;
+import cartoongrabber.tools.MarkupDateFormatter;
+import cartoongrabber.tools.UrlDownloaderService;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Transformer component that transforms a {@link SourceDefinition} into a {@link CartoonStrip}.
+ * Process of transformation is:
+ * 1. format base URL
+ * 2. download HTML from base URL
+ * 3. extract URL of image
+ * 4. download image from extracted URL
  * Created by Philipp Krauß on 17.07.2017.
  */
 @Component
@@ -89,15 +97,14 @@ public class DefinitionToCartoonTransformer {
     }
 
     private URL formatBaseUrl(String baseUrl) {
-        URL url = null;
         try {
             String formattedUrl = formatter.format(baseUrl);
-            url = new URL(formattedUrl);
+            URL url = new URL(formattedUrl);
+            log.debug("base URL: [{}]", url);
+            return url;
         } catch (Exception e) {
-            log.error("caught exception when constructing URL", e);
+            log.error("caught exception when formatting base URL [{}]", baseUrl, e);
             throw new RuntimeException(e);
         }
-        log.debug("base URL: [{}]", url);
-        return url;
     }
 }

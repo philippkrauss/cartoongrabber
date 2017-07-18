@@ -1,4 +1,4 @@
-package cartoongrabber.transformer;
+package cartoongrabber.tools;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 public class MarkupDateFormatterTest {
 
     @Autowired
-    MarkupDateFormatter formatter;
+    private MarkupDateFormatter formatter;
 
     @Test
     public void testFormatYear() {

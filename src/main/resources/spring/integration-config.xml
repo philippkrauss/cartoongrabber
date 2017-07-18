@@ -24,7 +24,7 @@
     <int:channel id="cartoonChannel"/>
 
     <int:service-activator input-channel="cartoonChannel">
-        <bean class="cartoongrabber.service.FileCollection">
+        <bean class="cartoongrabber.backend.FileCollection">
             <constructor-arg value="${conf.filecollection.baseDir}"/>
         </bean>
     </int:service-activator>

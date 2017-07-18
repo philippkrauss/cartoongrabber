@@ -1,4 +1,6 @@
-package cartoongrabber.service;
+package cartoongrabber.tools;
+
+import cartoongrabber.tools.DateService;
 
 import java.time.LocalDate;
 
