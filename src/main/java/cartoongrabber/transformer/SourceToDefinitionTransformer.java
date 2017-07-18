@@ -13,6 +13,6 @@ public class SourceToDefinitionTransformer {
 
     public SourceDefinition transform(String source) {
         log.debug("transforming source [{}] to source definition", source);
-        return new SourceDefinition(source);
+        return new SourceDefinition(source, "http://dilbert.com/strip/<yyyy>-<MM>-<dd>", "<meta property=\"og:image\" content=\"([^\"]*)\"\\/>");
     }
 }

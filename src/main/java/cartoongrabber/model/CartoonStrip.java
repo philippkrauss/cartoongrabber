@@ -19,6 +19,10 @@ public class CartoonStrip {
         this.image = image;
     }
 
+    public URL getSource() {
+        return source;
+    }
+
     @Override
     public String toString() {
         return "CartoonStrip{" +
@@ -26,5 +30,13 @@ public class CartoonStrip {
                 ", source=" + source +
                 ", image=" + image +
                 '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 }

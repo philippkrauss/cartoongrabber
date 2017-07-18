@@ -23,10 +23,10 @@ public class Main {
         LOG.info("starting cartoon grabber");
         GenericApplicationContext ctx = new GenericApplicationContext();
         XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ctx);
-        xmlReader.loadBeanDefinitions(new ClassPathResource("applicationContext.xml"));
-        xmlReader.loadBeanDefinitions(new ClassPathResource("applicationContext-integration.xml"));
-        AnnotatedBeanDefinitionReader annotationReader = new AnnotatedBeanDefinitionReader(ctx);
-        annotationReader.register(Main.class);
+        xmlReader.loadBeanDefinitions(new ClassPathResource("spring/integration-config.xml"));
+//        xmlReader.loadBeanDefinitions(new ClassPathResource("applicationContext-integration.xml"));
+//        AnnotatedBeanDefinitionReader annotationReader = new AnnotatedBeanDefinitionReader(ctx);
+//        annotationReader.register(Main.class);
         ctx.refresh();
 
         CartoonGrabberCli cli = ctx.getBean(CartoonGrabberCli.class);
