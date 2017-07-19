@@ -2,6 +2,7 @@ package cartoongrabber.transformer;
 
 import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.model.SourceDefinition;
+import cartoongrabber.tools.DateService;
 import cartoongrabber.tools.MarkupDateFormatter;
 import cartoongrabber.tools.UrlDownloaderService;
 import org.apache.commons.io.IOUtils;
@@ -16,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,11 +37,13 @@ public class DefinitionToCartoonTransformer {
 
     private final MarkupDateFormatter formatter;
     private final UrlDownloaderService downloaderService;
+    private final DateService dateService;
 
     @Autowired
-    public DefinitionToCartoonTransformer(MarkupDateFormatter formatter, UrlDownloaderService downloaderService) {
+    public DefinitionToCartoonTransformer(MarkupDateFormatter formatter, UrlDownloaderService downloaderService, DateService dateService) {
         this.formatter = formatter;
         this.downloaderService = downloaderService;
+        this.dateService = dateService;
     }
 
     public CartoonStrip transform(SourceDefinition source) {
@@ -47,13 +51,14 @@ public class DefinitionToCartoonTransformer {
             log.warn("Cannot transform null source to cartoon strip");
             return null;
         }
+        LocalDate date = dateService.getDate();
         log.debug("transforming source definition [{}] to cartoon strip", source);
-        URL baseUrl = formatBaseUrl(source.getBaseUrl());
+        URL baseUrl = formatBaseUrl(source.getBaseUrl(), date);
         String webPage = fetchBaseUrl(baseUrl);
         URL imgUrl = extractImgUrl(webPage, source.getImagePattern());
         BufferedImage image = downloadImage(imgUrl);
         //TODO: parse metadata
-        return new CartoonStrip(source.getName(), baseUrl, image);
+        return new CartoonStrip(source.getName(), baseUrl, image, date);
     }
 
     private BufferedImage downloadImage(URL imgUrl) {
@@ -63,8 +68,7 @@ public class DefinitionToCartoonTransformer {
             in = new ByteArrayInputStream(downloadedBytes);
             return ImageIO.read(in);
         } catch (IOException e) {
-            log.error("Could not download image from [{}]", imgUrl);
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not download image from " + imgUrl, e);
         } finally {
             IOUtils.closeQuietly(in);
         }
@@ -79,8 +83,7 @@ public class DefinitionToCartoonTransformer {
                 return new URL(match);
             }
         } catch (Exception e) {
-            log.error("could not extract image URL using pattern [{}]", imagePattern);
-            throw new RuntimeException(e);
+            throw new RuntimeException("could not extract image URL using pattern " + imagePattern, e);
         }
         throw new RuntimeException("Could not match image URL using pattern [" + imagePattern + "]");
     }
@@ -91,20 +94,18 @@ public class DefinitionToCartoonTransformer {
             log.trace("fetched String from [{}]: {}", baseUrl, fetched);
             return fetched;
         } catch (IOException e) {
-            log.error("Could not download from URL [{}]", e);
-            throw new RuntimeException(e);
+            throw new RuntimeException("Could not download from URL " + baseUrl, e);
         }
     }
 
-    private URL formatBaseUrl(String baseUrl) {
+    private URL formatBaseUrl(String baseUrl, LocalDate date) {
         try {
-            String formattedUrl = formatter.format(baseUrl);
+            String formattedUrl = formatter.format(baseUrl, date);
             URL url = new URL(formattedUrl);
             log.debug("base URL: [{}]", url);
             return url;
         } catch (Exception e) {
-            log.error("caught exception when formatting base URL [{}]", baseUrl, e);
-            throw new RuntimeException(e);
+            throw new RuntimeException("An error occurred when formatting base URL " + baseUrl, e);
         }
     }
 }

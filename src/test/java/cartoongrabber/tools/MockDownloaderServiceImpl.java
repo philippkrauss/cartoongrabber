@@ -1,5 +1,7 @@
 package cartoongrabber.tools;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Queue;
 /**
  * Created by Philipp Krauß on 17.07.2017.
  */
+@Component
 public class MockDownloaderServiceImpl implements UrlDownloaderService {
 
     private final List<URL> urls = new ArrayList<>();

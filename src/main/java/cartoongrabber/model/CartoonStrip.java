@@ -2,6 +2,7 @@ package cartoongrabber.model;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.time.LocalDate;
 
 /**
  * Domain class for modelling a comic strip.
@@ -12,15 +13,21 @@ public class CartoonStrip {
     private final String name;
     private final URL source;
     private final BufferedImage image;
+    private final LocalDate date;
 
-    public CartoonStrip(String name, URL source, BufferedImage image) {
+    public CartoonStrip(String name, URL source, BufferedImage image, LocalDate date) {
         this.name = name;
         this.source = source;
         this.image = image;
+        this.date = date;
     }
 
     public URL getSource() {
         return source;
+    }
+
+    public LocalDate getDate() {
+        return date;
     }
 
     @Override

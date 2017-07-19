@@ -2,6 +2,7 @@ package cartoongrabber.transformer;
 
 import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.model.SourceDefinition;
+import cartoongrabber.tools.MockDateServiceImpl;
 import cartoongrabber.tools.MockDownloaderServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
 
+import static cartoongrabber.tools.TestTools.imageEquals;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -34,6 +36,9 @@ public class DefinitionToCartoonTransformerTest {
     @Autowired
     private MockDownloaderServiceImpl mockDownloaderService;
 
+    @Autowired
+    private MockDateServiceImpl mockDateService;
+
     private SourceDefinition source = null;
     private final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_INDEXED);
 
@@ -44,6 +49,7 @@ public class DefinitionToCartoonTransformerTest {
         ImageIO.write(image, "png", out);
         mockDownloaderService.addContent(out.toByteArray());
         source = new SourceDefinition("testing", "http://test.com/<yyyy>-<MM>-<dd>", "from:\"([^\"].*)\"");
+        mockDateService.setDate(2000, 1, 25);
     }
 
     @Test
@@ -76,8 +82,8 @@ public class DefinitionToCartoonTransformerTest {
         CartoonStrip strip = transformer.transform(source);
         assertEquals(2, mockDownloaderService.getUrls().size());
         assertEquals(new URL("http://here.com"), mockDownloaderService.getUrls().get(1));
-        //image objects have to equals method, therefore comparing String version without object ID (substring(22))
-        assertEquals(image.toString().substring(22), strip.getImage().toString().substring(22));
+        //image objects have to equals method, therefore comparing String version without object ID)
+        imageEquals(image, strip.getImage());
     }
 
 }

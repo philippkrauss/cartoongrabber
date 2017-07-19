@@ -2,9 +2,9 @@ package cartoongrabber.tools;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,25 +20,17 @@ public class MarkupDateFormatter {
 
     private final Logger log = LoggerFactory.getLogger(MarkupDateFormatter.class);
 
-    private final DateService dateService;
-
-    @Autowired
-    public MarkupDateFormatter(DateService dateService) {
-        this.dateService = dateService;
-    }
-
-
-    public String format(String base) {
+    public String format(String base, LocalDate date) {
         String ret = base;
-        String formatted = formatFirst(base);
+        String formatted = formatFirst(base, date);
         while (!ret.equals(formatted)) {
             ret = formatted;
-            formatted = formatFirst(ret);
+            formatted = formatFirst(ret, date);
         }
         return ret;
     }
 
-    private String formatFirst(String base) {
+    private String formatFirst(String base, LocalDate date) {
         String pattern = "<([^>]*)>";
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(base);
@@ -46,7 +38,7 @@ public class MarkupDateFormatter {
         if (m.find()) {
             String match = m.group(1);
             log.debug("extracted group [{}]", m.group());
-            String formatted = dateService.getDate().format(DateTimeFormatter.ofPattern(match));
+            String formatted = date.format(DateTimeFormatter.ofPattern(match));
             String replaced = m.replaceFirst(formatted);
             result = replaced;
             log.debug("replaced string: [{}]", replaced);
