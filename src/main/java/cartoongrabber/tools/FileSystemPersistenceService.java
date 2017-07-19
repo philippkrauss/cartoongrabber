@@ -8,4 +8,6 @@ public interface FileSystemPersistenceService {
     void createDirectory(String name);
 
     void storeImage(String directoryName, String imageName, BufferedImage image);
+
+    void storeTextFile(String directoryName, String textFileName, String text);
 }

@@ -51,4 +51,13 @@ public class FileCollectionTest {
         assertEquals(fileSystemPersistence.imageName, "dilbert");
         imageEquals(cartoon.getImage(), fileSystemPersistence.image);
     }
+
+    @Test
+    public void testStoreText() {
+        CartoonStrip cartoon = createCartoon();
+        fileCollection.collect(cartoon);
+        assertEquals(fileSystemPersistence.directoryName, "2000-01-17");
+        assertEquals(fileSystemPersistence.textFileName, "dilbert");
+        assertEquals(fileSystemPersistence.text, "Cartoon strip \"dilbert\", downloaded from http://www.dilbert.com/");
+    }
 }

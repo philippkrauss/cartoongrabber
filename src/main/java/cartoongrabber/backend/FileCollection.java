@@ -27,13 +27,13 @@ public class FileCollection implements CartoonCollectionService {
 
     @Override
     public void collect(CartoonStrip cartoon) {
+        log.debug("Storing cartoon [{}] ", cartoon);
         LocalDate date = cartoon.getDate();
         String directoryName = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         persistenceService.createDirectory(directoryName);
-        //store image in subdirectory
         persistenceService.storeImage(directoryName, cartoon.getName(), cartoon.getImage());
-        //create text file with "downloaded from" content
-        log.debug("collecting cartoon [{}] ", cartoon);
+        String text = "Cartoon strip \"" + cartoon.getName() + "\", downloaded from " + cartoon.getSource();
+        persistenceService.storeTextFile(directoryName, cartoon.getName(), text);
     }
 
 }
