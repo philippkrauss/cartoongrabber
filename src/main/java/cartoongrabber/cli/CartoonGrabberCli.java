@@ -24,16 +24,6 @@ public class CartoonGrabberCli {
             argument = args[0];
         }
         grabberService.grab(argument);
-
-//        BufferedImage img = null;
-//        try {
-//            URL url = new URL("http", "assets.amuniversal.com", "/367703903d890135d5f8005056a9545d");
-//            img = ImageIO.read(url);
-//            ImageIO.write(img, "png", new File("C:/src/myfile.png"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(img.toString());
     }
 
 }

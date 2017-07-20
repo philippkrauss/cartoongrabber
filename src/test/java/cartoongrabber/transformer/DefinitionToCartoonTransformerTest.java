@@ -18,9 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.net.URL;
 
 import static cartoongrabber.tools.TestTools.imageEquals;
-import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by Philipp Krauß on 17.07.2017.
@@ -54,8 +52,11 @@ public class DefinitionToCartoonTransformerTest {
 
     @Test
     public void testNullSource() {
-        CartoonStrip strip = transformer.transform(null);
-        assertNull(strip);
+        try {
+            transformer.transform(null);
+            fail("expected exception");
+        } catch (RuntimeException e) {
+        }
     }
 
     @Test

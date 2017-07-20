@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +39,7 @@ public class MarkupDateFormatter {
         if (m.find()) {
             String match = m.group(1);
             log.debug("extracted group [{}]", m.group());
-            String formatted = date.format(DateTimeFormatter.ofPattern(match));
+            String formatted = date.format(DateTimeFormatter.ofPattern(match).withLocale(Locale.US));
             String replaced = m.replaceFirst(formatted);
             result = replaced;
             log.debug("replaced string: [{}]", replaced);

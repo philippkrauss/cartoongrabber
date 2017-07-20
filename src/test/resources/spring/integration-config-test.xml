@@ -8,4 +8,6 @@
 
     <context:component-scan base-package="cartoongrabber"/>
 
+    <bean class="cartoongrabber.tools.PropertyFileRepository" />
+
 </beans>

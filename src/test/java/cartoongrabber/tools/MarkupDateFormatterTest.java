@@ -39,4 +39,10 @@ public class MarkupDateFormatterTest {
         String formatted = formatter.format("http://dilbert.com/strip/<yyyy>-<MM>-<dd>", date);
         assertEquals("http://dilbert.com/strip/2000-01-25", formatted);
     }
+
+    @Test
+    public void testNameOfMonth() {
+        String formatted = formatter.format("<MMMM>", date);
+        assertEquals("January", formatted);
+    }
 }

@@ -48,8 +48,7 @@ public class DefinitionToCartoonTransformer {
 
     public CartoonStrip transform(SourceDefinition source) {
         if (source == null) {
-            log.warn("Cannot transform null source to cartoon strip");
-            return null;
+            throw new RuntimeException("Cannot transform null source to cartoon strip");
         }
         LocalDate date = dateService.getDate();
         log.debug("transforming source definition [{}] to cartoon strip", source);
@@ -57,7 +56,6 @@ public class DefinitionToCartoonTransformer {
         String webPage = fetchBaseUrl(baseUrl);
         URL imgUrl = extractImgUrl(webPage, source.getImagePattern());
         BufferedImage image = downloadImage(imgUrl);
-        //TODO: parse metadata
         return new CartoonStrip(source.getName(), baseUrl, image, date);
     }
 
