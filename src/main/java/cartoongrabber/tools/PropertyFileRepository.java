@@ -2,6 +2,7 @@ package cartoongrabber.tools;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -37,6 +38,11 @@ public class PropertyFileRepository implements SourcePropertyRepositoryService {
             throw new RuntimeException("unknown source: " + source);
         }
         return properties.get(source);
+    }
+
+    @Override
+    public Collection<String> listSources() {
+        return properties.keySet();
     }
 
     public void put(String name, Properties p) {

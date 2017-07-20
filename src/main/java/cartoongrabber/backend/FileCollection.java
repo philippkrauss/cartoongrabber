@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * File based implementation of {@link CartoonCollectionService].
@@ -26,14 +27,16 @@ public class FileCollection implements CartoonCollectionService {
     }
 
     @Override
-    public void collect(CartoonStrip cartoon) {
-        log.debug("Storing cartoon [{}] ", cartoon);
-        LocalDate date = cartoon.getDate();
-        String directoryName = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        persistenceService.createDirectory(directoryName);
-        persistenceService.storeImage(directoryName, cartoon.getName(), cartoon.getImage());
-        String text = "Cartoon strip \"" + cartoon.getName() + "\", downloaded from " + cartoon.getSource();
-        persistenceService.storeTextFile(directoryName, cartoon.getName(), text);
+    public void collect(List<CartoonStrip> cartoons) {
+        for (CartoonStrip cartoon : cartoons) {
+            log.debug("Storing cartoon [{}] ", cartoon);
+            LocalDate date = cartoon.getDate();
+            String directoryName = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            persistenceService.createDirectory(directoryName);
+            persistenceService.storeImage(directoryName, cartoon.getName(), cartoon.getImage());
+            String text = "Cartoon strip \"" + cartoon.getName() + "\", downloaded from " + cartoon.getSource();
+            persistenceService.storeTextFile(directoryName, cartoon.getName(), text);
+        }
     }
 
 }

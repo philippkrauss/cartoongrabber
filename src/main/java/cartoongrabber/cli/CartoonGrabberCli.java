@@ -19,11 +19,7 @@ public class CartoonGrabberCli {
     }
 
     public void run(String[] args) {
-        String argument = "dilbert";
-        if (args.length == 1) {
-            argument = args[0];
-        }
-        grabberService.grab(argument);
+        grabberService.grab(args);
     }
 
 }

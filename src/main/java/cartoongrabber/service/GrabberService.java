@@ -6,5 +6,5 @@ package cartoongrabber.service;
  */
 public interface GrabberService {
 
-    void grab(String name);
+    void grab(String... names);
 }
