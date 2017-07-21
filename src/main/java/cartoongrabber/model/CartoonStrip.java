@@ -11,19 +11,21 @@ import java.time.LocalDate;
 public class CartoonStrip {
 
     private final String name;
-    private final URL source;
+    private final URL sourceUrl;
+    private final URL imageUrl;
     private final BufferedImage image;
     private final LocalDate date;
 
-    public CartoonStrip(String name, URL source, BufferedImage image, LocalDate date) {
+    public CartoonStrip(String name, URL sourceUrl, URL imageUrl, BufferedImage image, LocalDate date) {
         this.name = name;
-        this.source = source;
+        this.sourceUrl = sourceUrl;
+        this.imageUrl = imageUrl;
         this.image = image;
         this.date = date;
     }
 
-    public URL getSource() {
-        return source;
+    public URL getSourceUrl() {
+        return sourceUrl;
     }
 
     public LocalDate getDate() {
@@ -34,7 +36,7 @@ public class CartoonStrip {
     public String toString() {
         return "CartoonStrip{" +
                 "name='" + name + '\'' +
-                ", source=" + source +
+                ", sourceUrl=" + sourceUrl +
                 ", image=" + image +
                 '}';
     }
@@ -45,5 +47,9 @@ public class CartoonStrip {
 
     public BufferedImage getImage() {
         return image;
+    }
+
+    public URL getImageUrl() {
+        return imageUrl;
     }
 }

@@ -27,9 +27,11 @@
 
     <int:aggregator ref="cartoonAggregator" input-channel="cartoonChannel" output-channel="aggregatedCartoonsChannel" />
 
-    <int:channel id="aggregatedCartoonsChannel" />
+    <int:publish-subscribe-channel id="aggregatedCartoonsChannel" />
 
     <int:service-activator input-channel="aggregatedCartoonsChannel" ref="fileCollection" />
+
+    <int:service-activator input-channel="aggregatedCartoonsChannel" ref="htmlCollection" />
     
     <bean class="cartoongrabber.tools.FileSystemPersistenceImpl" >
         <constructor-arg value="${conf.filecollection.baseDir}"/>
@@ -40,7 +42,7 @@
     <bean class="cartoongrabber.tools.PropertyFileRepository" >
         <constructor-arg value="${conf.sources.baseDir}" />
     </bean>
+    <bean class="cartoongrabber.tools.TemplateEngine " />
 
-    
 
 </beans>

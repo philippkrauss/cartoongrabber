@@ -28,14 +28,24 @@ public class FileCollection implements CartoonCollectionService {
 
     @Override
     public void collect(List<CartoonStrip> cartoons) {
+        if (cartoons == null || cartoons.isEmpty()) {
+            throw new RuntimeException("empty cartoon list, cannot render!");
+        }
+        LocalDate date = cartoons.get(0).getDate();
+        String directoryName = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        persistenceService.createDirectory(directoryName);
+
         for (CartoonStrip cartoon : cartoons) {
             log.debug("Storing cartoon [{}] ", cartoon);
-            LocalDate date = cartoon.getDate();
-            String directoryName = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            persistenceService.createDirectory(directoryName);
             persistenceService.storeImage(directoryName, cartoon.getName(), cartoon.getImage());
-            String text = "Cartoon strip \"" + cartoon.getName() + "\", downloaded from " + cartoon.getSource();
-            persistenceService.storeTextFile(directoryName, cartoon.getName(), text);
+            StringBuilder text = new StringBuilder();
+            text.append("Cartoon strip \"")
+                    .append(cartoon.getName())
+                    .append("\", downloaded from ")
+                    .append(cartoon.getSourceUrl())
+                    .append(System.getProperty("line.separator"))
+                    .append("image URL: ").append(cartoon.getImageUrl());
+            persistenceService.storeTextFile(directoryName, cartoon.getName() + ".txt", text.toString());
         }
     }
 

@@ -56,7 +56,7 @@ public class DefinitionToCartoonTransformer {
         String webPage = fetchBaseUrl(baseUrl);
         URL imgUrl = extractImgUrl(webPage, source.getImagePattern());
         BufferedImage image = downloadImage(imgUrl);
-        return new CartoonStrip(source.getName(), baseUrl, image, date);
+        return new CartoonStrip(source.getName(), baseUrl, imgUrl, image, date);
     }
 
     private BufferedImage downloadImage(URL imgUrl) {

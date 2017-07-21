@@ -13,8 +13,8 @@ public class MockFileSystemPersistenceImpl implements FileSystemPersistenceServi
     public String directoryName = null;
     public String imageName = null;
     public BufferedImage image = null;
-    public String textFileName;
-    public String text;
+    public String textFileName = null;
+    public String text = null;
 
     @Override
     public void createDirectory(String name) {

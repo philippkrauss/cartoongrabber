@@ -55,12 +55,12 @@ public class FileSystemPersistenceImpl implements FileSystemPersistenceService {
     }
 
     private File createDestination(String directoryName, String imageName, String ending) {
-        return new File(new File(basePath, directoryName), imageName + "." + ending);
+        return new File(new File(basePath, directoryName), imageName + ((ending != null)?"." + ending:""));
     }
 
     @Override
     public void storeTextFile(String directoryName, String textFileName, String text) {
-        File destination = createDestination(directoryName, textFileName, "txt");
+        File destination = createDestination(directoryName, textFileName, null);
         try {
             FileUtils.writeStringToFile(destination, text, Charset.forName("UTF8"));
         } catch (IOException e) {

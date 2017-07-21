@@ -2,10 +2,10 @@ package cartoongrabber.backend;
 
 import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.tools.MockFileSystemPersistenceImpl;
+import cartoongrabber.tools.MockRenderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -14,29 +14,29 @@ import java.util.Collections;
 import java.util.List;
 
 import static cartoongrabber.tools.TestTools.createCartoon;
-import static cartoongrabber.tools.TestTools.imageEquals;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
-/**
- * Created by Philipp Krauß on 18.07.2017.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:/spring/integration-config-test.xml")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class FileCollectionTest {
+public class HtmlCollectionTest {
+
 
     @Autowired
-    private FileCollection fileCollection;
+    private HtmlCollection htmlCollection;
 
     @Autowired
     private MockFileSystemPersistenceImpl fileSystemPersistence;
+
+    @Autowired
+    private MockRenderService renderService;
 
     private final List<CartoonStrip> oneCartoon = Collections.singletonList(createCartoon());
 
     @Test
     public void testNull() {
         try {
-            fileCollection.collect(null);
+            htmlCollection.collect(null);
             fail("expected exception");
         } catch (RuntimeException e) {
             assertEquals(RuntimeException.class, e.getClass());
@@ -46,7 +46,7 @@ public class FileCollectionTest {
     @Test
     public void testEmpty() {
         try {
-            fileCollection.collect(new ArrayList<>());
+            htmlCollection.collect(new ArrayList<>());
             fail("expected exception");
         } catch (RuntimeException e) {
             assertEquals(RuntimeException.class, e.getClass());
@@ -54,24 +54,21 @@ public class FileCollectionTest {
     }
 
     @Test
-    public void testCreateDirectory() throws Exception {
-        fileCollection.collect(oneCartoon);
-        assertEquals(fileSystemPersistence.createdDirectory, "2000-01-17");
+    public void testCreateDirectory() {
+        htmlCollection.collect(oneCartoon);
+        assertEquals("2000-01-17", fileSystemPersistence.createdDirectory);
     }
 
     @Test
-    public void testStoreImage() {
-        fileCollection.collect(oneCartoon);
-        assertEquals(fileSystemPersistence.directoryName, "2000-01-17");
-        assertEquals(fileSystemPersistence.imageName, "dilbert");
-        imageEquals(oneCartoon.get(0).getImage(), fileSystemPersistence.image);
+    public void testRender() {
+        htmlCollection.collect(oneCartoon);
+        assertEquals(renderService.renderedText, fileSystemPersistence.text);
     }
 
     @Test
-    public void testStoreText() {
-        fileCollection.collect(oneCartoon);
-        assertEquals(fileSystemPersistence.directoryName, "2000-01-17");
-        assertEquals(fileSystemPersistence.textFileName, "dilbert.txt");
-        assertNotNull(fileSystemPersistence.text);
+    public void testFilename() {
+        htmlCollection.collect(oneCartoon);
+        assertEquals("cartoons.html", fileSystemPersistence.textFileName);
     }
+
 }

@@ -68,13 +68,13 @@ public class DefinitionToCartoonTransformerTest {
     @Test
     public void urlNotNull() {
         CartoonStrip strip = transformer.transform(source);
-        assertNotNull(strip.getSource());
+        assertNotNull(strip.getSourceUrl());
     }
 
     @Test
     public void urlPatternExtended() throws Exception {
         CartoonStrip strip = transformer.transform(source);
-        assertEquals(new URL("http://test.com/2000-01-25"), strip.getSource());
+        assertEquals(new URL("http://test.com/2000-01-25"), strip.getSourceUrl());
         assertEquals(new URL("http://test.com/2000-01-25"), mockDownloaderService.getUrls().get(0));
     }
 
