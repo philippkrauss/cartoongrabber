@@ -37,8 +37,8 @@ public class HtmlCollection implements CartoonCollectionService {
         log.debug("collecting {} cartoons", cartoons.size());
         LocalDate date = cartoons.get(0).getDate();
         String directoryName = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        persistenceService.createDirectory(directoryName);
         String text = renderService.render(cartoons);
-        persistenceService.storeTextFile(directoryName, "cartoons.html", text);
+        persistenceService.storeTextFile("cartoons-" + directoryName + ".html", text);
+        persistenceService.storeTextFile("cartoons.html", text);
     }
 }

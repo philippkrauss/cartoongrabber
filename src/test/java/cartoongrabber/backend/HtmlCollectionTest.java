@@ -15,6 +15,7 @@ import java.util.List;
 
 import static cartoongrabber.tools.TestTools.createCartoon;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,12 +55,6 @@ public class HtmlCollectionTest {
     }
 
     @Test
-    public void testCreateDirectory() {
-        htmlCollection.collect(oneCartoon);
-        assertEquals("2000-01-17", fileSystemPersistence.createdDirectory);
-    }
-
-    @Test
     public void testRender() {
         htmlCollection.collect(oneCartoon);
         assertEquals(renderService.renderedText, fileSystemPersistence.text);
@@ -69,6 +64,7 @@ public class HtmlCollectionTest {
     public void testFilename() {
         htmlCollection.collect(oneCartoon);
         assertEquals("cartoons.html", fileSystemPersistence.textFileName);
+        assertNull(fileSystemPersistence.directoryName);
     }
 
 }

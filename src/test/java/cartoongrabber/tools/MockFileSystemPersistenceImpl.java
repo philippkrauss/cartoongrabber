@@ -34,4 +34,10 @@ public class MockFileSystemPersistenceImpl implements FileSystemPersistenceServi
         this.textFileName = textFileName;
         this.text = text;
     }
+
+    @Override
+    public void storeTextFile(String textFileName, String text) {
+        this.textFileName = textFileName;
+        this.text = text;
+    }
 }

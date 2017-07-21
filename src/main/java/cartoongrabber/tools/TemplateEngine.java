@@ -9,9 +9,11 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Uses apache velocity template engine to render a list of {@link CartoonStrip} into HTML format.
+ */
 public class TemplateEngine implements RenderService {
 
-    //    private final VelocityEngine velocityEngine;
     private final Template template;
 
     public TemplateEngine() {

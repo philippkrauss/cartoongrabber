@@ -42,7 +42,8 @@
     <bean class="cartoongrabber.tools.PropertyFileRepository" >
         <constructor-arg value="${conf.sources.baseDir}" />
     </bean>
-    <bean class="cartoongrabber.tools.TemplateEngine " />
+
+    <bean id="renderService" class="cartoongrabber.tools.TemplateEngine " />
 
 
 </beans>

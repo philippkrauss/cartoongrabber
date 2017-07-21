@@ -10,4 +10,6 @@ public interface FileSystemPersistenceService {
     void storeImage(String directoryName, String imageName, BufferedImage image);
 
     void storeTextFile(String directoryName, String textFileName, String text);
+
+    void storeTextFile(String textFileName, String text);
 }

@@ -61,10 +61,20 @@ public class FileSystemPersistenceImpl implements FileSystemPersistenceService {
     @Override
     public void storeTextFile(String directoryName, String textFileName, String text) {
         File destination = createDestination(directoryName, textFileName, null);
+        writeText(destination, text);
+    }
+
+    @Override
+    public void storeTextFile(String textFileName, String text) {
+        File destination = new File(basePath, textFileName);
+        writeText(destination, text);
+    }
+
+    private void writeText(File destination, String text) {
         try {
             FileUtils.writeStringToFile(destination, text, Charset.forName("UTF8"));
         } catch (IOException e) {
-            throw new RuntimeException("Error when storing text file [" + textFileName + "] to destination [" + destination + "]", e);
+            throw new RuntimeException("Error when storing text file [" + destination + "]", e);
         }
     }
 }
