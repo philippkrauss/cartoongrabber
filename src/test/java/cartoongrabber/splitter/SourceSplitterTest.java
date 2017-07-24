@@ -13,7 +13,7 @@ import java.util.Properties;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:/spring/integration-config-test.xml")
+@ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
 public class SourceSplitterTest {
 
     @Autowired

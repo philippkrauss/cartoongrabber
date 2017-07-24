@@ -20,6 +20,7 @@ dependencies {
     compile "org.springframework.integration:spring-integration-http:${springVersion}"
     compile "commons-io:commons-io:2.5"
     compile "org.apache.velocity:velocity:1.7"
+    compile 'net.sf.jopt-simple:jopt-simple:4.9'
     testCompile "junit:junit:4.12"
     testCompile "org.springframework:spring-test:${springVersion}"
 }

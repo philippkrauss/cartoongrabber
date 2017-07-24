@@ -1,6 +1,7 @@
 package cartoongrabber.tools;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -13,28 +14,30 @@ import java.nio.charset.Charset;
  */
 public class FileSystemPersistenceImpl implements FileSystemPersistenceService {
 
-    private final File basePath;
+    @Value("${outDir:output}")
+    private String basePathString;
 
-    public FileSystemPersistenceImpl(String basePath) {
-        this.basePath = new File(basePath);
-        checkBasePath(this.basePath);
+    private File getBasePath() {
+        File basePath = new File(basePathString);
+        checkBasePath(basePath);
+        return basePath;
     }
 
     private void checkBasePath(File path) {
-        if (!path.isDirectory()) {
-            throw new IllegalArgumentException("Path " + path + " exists but is no directory!");
-        }
         if (!path.exists()) {
             boolean success = path.mkdirs();
             if (!success) {
                 throw new RuntimeException("Path " + path + " could not be created!");
             }
         }
+        if (!path.isDirectory()) {
+            throw new IllegalArgumentException("Path " + path + " exists but is no directory!");
+        }
     }
 
     @Override
     public void createDirectory(String name) {
-        File newDirectory = new File(basePath, name);
+        File newDirectory = new File(getBasePath(), name);
         if (newDirectory.exists() && newDirectory.isDirectory()) {
             return;
         }
@@ -55,7 +58,7 @@ public class FileSystemPersistenceImpl implements FileSystemPersistenceService {
     }
 
     private File createDestination(String directoryName, String imageName, String ending) {
-        return new File(new File(basePath, directoryName), imageName + ((ending != null)?"." + ending:""));
+        return new File(new File(getBasePath(), directoryName), imageName + ((ending != null)?"." + ending:""));
     }
 
     @Override
@@ -66,7 +69,7 @@ public class FileSystemPersistenceImpl implements FileSystemPersistenceService {
 
     @Override
     public void storeTextFile(String textFileName, String text) {
-        File destination = new File(basePath, textFileName);
+        File destination = new File(getBasePath(), textFileName);
         writeText(destination, text);
     }
 

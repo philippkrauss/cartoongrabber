@@ -38,14 +38,10 @@ public class FileCollection implements CartoonCollectionService {
         for (CartoonStrip cartoon : cartoons) {
             log.debug("Storing cartoon [{}] ", cartoon);
             persistenceService.storeImage(directoryName, cartoon.getName(), cartoon.getImage());
-            StringBuilder text = new StringBuilder();
-            text.append("Cartoon strip \"")
-                    .append(cartoon.getName())
-                    .append("\", downloaded from ")
-                    .append(cartoon.getSourceUrl())
-                    .append(System.getProperty("line.separator"))
-                    .append("image URL: ").append(cartoon.getImageUrl());
-            persistenceService.storeTextFile(directoryName, cartoon.getName() + ".txt", text.toString());
+            String text = "Cartoon string \"" + cartoon.getName() + "\" downloaded from" + cartoon.getSourceUrl()
+                    + System.getProperty("line.separator")
+                    + "image URL: " + cartoon.getImageUrl();
+            persistenceService.storeTextFile(directoryName, cartoon.getName() + ".txt", text);
         }
     }
 

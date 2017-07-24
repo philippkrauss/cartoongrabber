@@ -1,5 +1,7 @@
 package cartoongrabber.tools;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.File;
 import java.io.FileReader;
 import java.util.Collection;
@@ -11,14 +13,10 @@ public class PropertyFileRepository implements SourcePropertyRepositoryService {
 
     private final Map<String, Properties> properties = new HashMap<>();
 
-    public PropertyFileRepository() {
-    }
+    @Value("${configFile:config/grabber.properties}")
+    private String propertyFile;
 
-    public PropertyFileRepository(String propertyFile) {
-        loadRepoFromFile(propertyFile);
-    }
-
-    private void loadRepoFromFile(String propertyFile) {
+    public void loadRepoFromFile() {
         File file = new File(propertyFile);
         if (!file.exists() || !file.canRead()) {
             throw new RuntimeException("Cannot access file [" + file + "]");

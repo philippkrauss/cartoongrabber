@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  * Created by Philipp Krauß on 17.07.2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:/spring/integration-config-test.xml")
+@ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
 public class MarkupDateFormatterTest {
 
     @Autowired

@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  * Created by Philipp Krauß on 17.07.2017.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:/spring/integration-config-test.xml")
+@ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class DefinitionToCartoonTransformerTest {
 

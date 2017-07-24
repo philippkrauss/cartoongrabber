@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:/spring/integration-config-test.xml")
+@ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
 public class HtmlCollectionTest {
 
 
