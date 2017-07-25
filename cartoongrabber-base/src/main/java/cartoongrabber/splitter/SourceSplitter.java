@@ -24,6 +24,10 @@ public class SourceSplitter {
     }
 
     public List<String> split(String input) {
+        if (input.isEmpty()) {
+            log.info("No source specified, grabbing 'all' instead");
+            input = "all";
+        }
         log.debug("splitting input [{}]", input);
         List<String> ret = new ArrayList<>();
         ret.addAll(Arrays.asList(input.split(",")));

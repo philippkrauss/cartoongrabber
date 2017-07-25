@@ -1,0 +1,20 @@
+apply plugin: 'application'
+apply plugin: 'distribution'
+
+mainClassName = 'cartoongrabber.Main'
+
+dependencies {
+    compile project(':cartoongrabber-base')
+    runtime "ch.qos.logback:logback-classic:1.1.7"
+    compile 'net.sf.jopt-simple:jopt-simple:4.9'
+}
+
+distributions {
+    main {
+        contents {
+            into('config') {
+                from('config')
+            }
+        }
+    }
+}

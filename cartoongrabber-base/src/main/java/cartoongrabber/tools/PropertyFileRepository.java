@@ -1,5 +1,7 @@
 package cartoongrabber.tools;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
@@ -11,6 +13,8 @@ import java.util.Properties;
 
 public class PropertyFileRepository implements SourcePropertyRepositoryService {
 
+    private final Logger log = LoggerFactory.getLogger(PropertyFileRepository.class);
+
     private final Map<String, Properties> properties = new HashMap<>();
 
     @Value("${configFile:config/grabber.properties}")
@@ -19,8 +23,9 @@ public class PropertyFileRepository implements SourcePropertyRepositoryService {
     public void loadRepoFromFile() {
         File file = new File(propertyFile);
         if (!file.exists() || !file.canRead()) {
-            throw new RuntimeException("Cannot access file [" + file + "]");
+            throw new RuntimeException("Cannot access file [" + file.getAbsolutePath() + "]");
         }
+        log.debug("loading property file repository from [{}]", file.getAbsolutePath());
         SourcePropertyParser parser = new SourcePropertyParser();
         try (FileReader reader = new FileReader(file)) {
             Map<String, Properties> parsedProperties = parser.parse(reader);

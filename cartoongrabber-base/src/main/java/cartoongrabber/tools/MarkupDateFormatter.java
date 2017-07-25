@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Formats a String that contains occurrences of time patterns. Time patterns have to be marked using '<' and '>'
+ * Formats a String that contains occurrences of time patterns. Time patterns have to be marked using '&lt;' and '&gt;'
  * brackets. Uses a {@link DateTimeFormatter} to format the subsections of the string and a {@link DateService} to get
  * the date.
  * Created by Philipp Krauß on 17.07.2017.

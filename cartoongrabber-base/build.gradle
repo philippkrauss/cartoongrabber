@@ -1,0 +1,10 @@
+
+
+dependencies {
+    compile "org.springframework:spring-context:${springVersion}"
+    runtime "org.slf4j:jcl-over-slf4j:1.7.21"
+    compile "org.springframework.integration:spring-integration-core:${springVersion}"
+    compile "commons-io:commons-io:2.5"
+    compile "org.apache.velocity:velocity:1.7"
+    testCompile "org.springframework:spring-test:${springVersion}"
+}

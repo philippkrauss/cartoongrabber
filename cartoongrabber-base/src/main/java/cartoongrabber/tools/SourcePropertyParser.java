@@ -11,8 +11,8 @@ import java.util.Properties;
  * Parses a properties file and splits it into a map of smaller Properties. The first part of the property name
  * determines the name of the smaller Properties.
  * Example:
- * {a.prop1=val1, a.prop2=val2} are merged into {"a" -> (prop1=val1, prop2=val2)}
- * {a.prop1=val1, b.prop2=val2} are merged into {"a" -> (prop1=val1), "b" -> (prop2=val2)}
+ * {a.prop1=val1, a.prop2=val2} are merged into {"a" -&gt; (prop1=val1, prop2=val2)}
+ * {a.prop1=val1, b.prop2=val2} are merged into {"a" -&gt; (prop1=val1), "b" -&gt; (prop2=val2)}
  */
 public class SourcePropertyParser {
 

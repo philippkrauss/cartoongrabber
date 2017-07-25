@@ -24,7 +24,8 @@
 
     <int:channel id="cartoonChannel"/>
 
-    <int:aggregator ref="cartoonAggregator" input-channel="cartoonChannel" output-channel="aggregatedCartoonsChannel"/>
+    <int:aggregator ref="cartoonAggregator" release-strategy="releaseStrategy" method="aggregate" input-channel="cartoonChannel" output-channel="aggregatedCartoonsChannel" />
+    <bean id="releaseStrategy" class="org.springframework.integration.aggregator.SequenceSizeReleaseStrategy" />
 
     <int:publish-subscribe-channel id="aggregatedCartoonsChannel"/>
 

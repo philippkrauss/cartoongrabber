@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
- * File based implementation of {@link CartoonCollectionService].
+ * File based implementation of {@link CartoonCollectionService}.
  * Created by Philipp Krauß on 17.07.2017.
  */
 @Component

@@ -1,35 +1,27 @@
-apply plugin: 'java'
+subprojects {
+    
+    apply plugin: 'java'
 
-repositories {
-    mavenCentral()
+    repositories {
+        mavenCentral()
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    ext {
+        springVersion = '4.3.9.RELEASE'
+    }
+    
+    dependencies {
+        compile 'org.slf4j:slf4j-api:1.7.21'
+        testCompile "junit:junit:4.12"
+    }
+
+    version = '0.1.0'
+
+    jar {
+        manifest.attributes provider: 'gradle'
+    }
+
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-ext {
-    springVersion = '4.3.9.RELEASE'
-}
-dependencies {
-    compile "org.springframework:spring-context:${springVersion}"
-    compile "org.slf4j:jcl-over-slf4j:1.7.21"
-    compile "ch.qos.logback:logback-classic:1.1.7"
-    compile "org.springframework.integration:spring-integration-core:${springVersion}"
-    compile "org.springframework.integration:spring-integration-ws:${springVersion}"
-    compile "org.springframework.integration:spring-integration-xml:${springVersion}"
-    compile "org.springframework.integration:spring-integration-http:${springVersion}"
-    compile "commons-io:commons-io:2.5"
-    compile "org.apache.velocity:velocity:1.7"
-    compile 'net.sf.jopt-simple:jopt-simple:4.9'
-    testCompile "junit:junit:4.12"
-    testCompile "org.springframework:spring-test:${springVersion}"
-}
-
-jar {
-    baseName = 'cartoongrabber'
-    version =  '0.1.0'
-}
-
-apply plugin: 'application'
-
-mainClassName = 'cartoongrabber.Main'
