@@ -4,6 +4,7 @@ import cartoongrabber.tools.PropertyFileRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class SourceSplitterTest {
 
     @Autowired
@@ -52,17 +54,21 @@ public class SourceSplitterTest {
 
     @Test
     public void testEmpty() {
-        assertEquals(0, splitter.split("").size());
+        repository.put("a", new Properties());
+        repository.put("b", new Properties());
+        List<String> splitted = splitter.split("");
+        assertEquals(2, splitted.size());
+        assertEquals("a", splitted.get(0));
+        assertEquals("b", splitted.get(1));
     }
 
     @Test
     public void testAll() {
-        repository.put("a", new Properties());
-        repository.put("b", new Properties());
-
+        repository.put("c", new Properties());
+        repository.put("d", new Properties());
         List<String> splitted = splitter.split("all");
         assertEquals(2, splitted.size());
-        assertEquals("a", splitted.get(0));
-        assertEquals("b", splitted.get(1));
+        assertEquals("c", splitted.get(0));
+        assertEquals("d", splitted.get(1));
     }
 }
