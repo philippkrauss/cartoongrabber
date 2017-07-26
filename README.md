@@ -10,10 +10,11 @@ It started with the need to learn about [spring-integration](https://projects.sp
 and continued with different other frameworks and tools.
 
 Currently in use are
-* [spring-boot](https://projects.spring.io/spring-boot/)
-* other [spring](https://spring.io/) projects.
-* [Docker](https://www.docker.com/)
+* [spring-integration](https://projects.spring.io/spring-integration)
+* [spring](https://projects.spring.io/spring-framework/) for IOC
 * [Travis Ci](https://travis-ci.org/)
+* [spring-boot](https://projects.spring.io/spring-boot/)
+* [Docker](https://www.docker.com/)
 
 See the wiki for additional information on how the project works internally.
 
@@ -26,3 +27,6 @@ You can also create a distribution zip file by executing
 `gradlew :cartoongrabber-cli:distZip` or `gradlew :cartoongrabber-cli:distTar`. You
 will find the created distribution archive in the path 
 `cartoongrabber-cli/build/distributions`.
+
+The second flavor is currently under development. The CLI will be extended into a web
+application that gives access to the grabbed cartoons.
