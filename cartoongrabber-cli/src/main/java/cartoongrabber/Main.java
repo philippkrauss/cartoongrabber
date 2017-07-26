@@ -53,8 +53,8 @@ public class Main {
         GenericApplicationContext ctx = new GenericApplicationContext();
         ctx.getEnvironment().getPropertySources().addFirst(jOptSource);
         XmlBeanDefinitionReader xmlReader = new XmlBeanDefinitionReader(ctx);
-        xmlReader.loadBeanDefinitions(new ClassPathResource("spring/integration/integration-config.xml"));
-        xmlReader.loadBeanDefinitions(new ClassPathResource("spring/applicationContext.xml"));
+        xmlReader.loadBeanDefinitions(new ClassPathResource("spring/integration/html-backend-config.xml"));
+        xmlReader.loadBeanDefinitions(new ClassPathResource("spring/cliBeans.xml"));
         ctx.refresh();
         return ctx;
     }

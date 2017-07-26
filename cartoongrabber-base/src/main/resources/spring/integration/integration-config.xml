@@ -10,6 +10,10 @@
     <beans:import resource="classpath*:/spring/integration/integration-gateway.xml"/>
     <context:component-scan base-package="cartoongrabber"/>
 
+    <!--<bean id="renderService" class="cartoongrabber.tools.TemplateEngine "/>-->
+    <bean class="cartoongrabber.tools.DateServiceImpl"/>
+    <bean class="cartoongrabber.tools.UrlDownloaderServiceImpl"/>
+
     <int:splitter ref="sourceSplitter" input-channel="inputChannel" output-channel="sourceChannel"/>
 
     <int:channel id="sourceChannel"/>
@@ -29,8 +33,6 @@
 
     <int:publish-subscribe-channel id="aggregatedCartoonsChannel"/>
 
-    <int:service-activator input-channel="aggregatedCartoonsChannel" ref="fileCollection"/>
-
-    <int:service-activator input-channel="aggregatedCartoonsChannel" ref="htmlCollection"/>
+    <!--<int:service-activator input-channel="aggregatedCartoonsChannel" ref="fileCollection"/>-->
 
 </beans>

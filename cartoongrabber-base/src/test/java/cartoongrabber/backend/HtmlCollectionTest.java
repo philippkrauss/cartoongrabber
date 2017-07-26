@@ -3,6 +3,7 @@ package cartoongrabber.backend;
 import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.tools.MockFileSystemPersistenceImpl;
 import cartoongrabber.tools.MockRenderService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,13 @@ import java.util.Collections;
 import java.util.List;
 
 import static cartoongrabber.tools.TestTools.createCartoon;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
 public class HtmlCollectionTest {
 
 
-    @Autowired
     private HtmlCollection htmlCollection;
 
     @Autowired
@@ -33,6 +31,11 @@ public class HtmlCollectionTest {
     private MockRenderService renderService;
 
     private final List<CartoonStrip> oneCartoon = Collections.singletonList(createCartoon());
+
+    @Before
+    public void setUp() {
+        htmlCollection = new HtmlCollection(fileSystemPersistence, renderService);
+    }
 
     @Test
     public void testNull() {

@@ -4,6 +4,7 @@ import cartoongrabber.model.CartoonStrip;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.springframework.stereotype.Component;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Properties;
 /**
  * Uses apache velocity template engine to render a list of {@link CartoonStrip} into HTML format.
  */
+@Component
 public class TemplateEngine implements RenderService {
 
     private final Template template;

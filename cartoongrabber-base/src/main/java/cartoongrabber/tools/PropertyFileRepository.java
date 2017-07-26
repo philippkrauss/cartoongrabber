@@ -4,8 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,14 +24,30 @@ public class PropertyFileRepository implements SourcePropertyRepositoryService {
         if (!file.exists() || !file.canRead()) {
             throw new RuntimeException("Cannot access file [" + file.getAbsolutePath() + "]");
         }
-        log.debug("loading property file repository from [{}]", file.getAbsolutePath());
-        SourcePropertyParser parser = new SourcePropertyParser();
+        log.debug("loading property file repository from file [{}]", file.getAbsolutePath());
         try (FileReader reader = new FileReader(file)) {
-            Map<String, Properties> parsedProperties = parser.parse(reader);
-            properties.putAll(parsedProperties);
+            loadFromReader(reader);
         } catch (Exception e) {
-            throw new RuntimeException("Cannot parse configuration properties in [" + file + "]");
+            throw new RuntimeException("Cannot parse configuration properties from file in [" + file + "]", e);
         }
+    }
+
+    public void loadRepoFromResource() {
+        log.debug("loading property file repository from resource [{}]", propertyFile);
+        try (InputStream stream = this.getClass().getResourceAsStream(propertyFile);
+             InputStreamReader reader = new InputStreamReader(stream)) {
+            loadFromReader(reader);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot parse configuration properties from resource in [" + propertyFile + "]", e);
+        }
+
+
+    }
+
+    private void loadFromReader(Reader reader) throws Exception {
+        SourcePropertyParser parser = new SourcePropertyParser();
+        Map<String, Properties> parsedProperties = parser.parse(reader);
+        properties.putAll(parsedProperties);
     }
 
     @Override

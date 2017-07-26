@@ -2,12 +2,8 @@ package cartoongrabber.backend;
 
 import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.tools.MockFileSystemPersistenceImpl;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,16 +16,16 @@ import static org.junit.Assert.*;
 /**
  * Created by Philipp Krauß on 18.07.2017.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class FileCollectionTest {
 
-    @Autowired
     private FileCollection fileCollection;
-
-    @Autowired
     private MockFileSystemPersistenceImpl fileSystemPersistence;
+
+    @Before
+    public void setUp() {
+        fileSystemPersistence = new MockFileSystemPersistenceImpl();
+        fileCollection = new FileCollection(fileSystemPersistence);
+    }
 
     private final List<CartoonStrip> oneCartoon = Collections.singletonList(createCartoon());
 

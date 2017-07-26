@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Cartoon strips from ' + ${cartoons.get(0).getDate()}" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1 th:text="'Cartoons for ' + ${cartoons.get(0).getDate()}" />
+created by <a href="https://github.com/philippkrauss/cartoongrabber">cartoongrabber</a><br/><br/>
+
+<div th:each="cartoon : ${cartoons}">
+    <a th:href="'#ref_' + ${cartoon.name.hashCode()}" th:text="${cartoon.name}"/><br/>
+</div>
+<br/>
+<div th:each="cartoon : ${cartoons}">
+<h1 th:id="'ref_' + ${cartoon.name.hashCode()}" th:text="${cartoon.name}" />
+<img th:src="${cartoon.imageUrl}" />
+</div>
+</body>
+</html>

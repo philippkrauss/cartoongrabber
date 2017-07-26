@@ -5,8 +5,6 @@ import cartoongrabber.tools.FileSystemPersistenceService;
 import cartoongrabber.tools.RenderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +13,6 @@ import java.util.List;
 /**
  * creates a HTML document containing links to the images, instead of storing the images themselves.
  */
-@Component
 public class HtmlCollection implements CartoonCollectionService {
 
     private final Logger log = LoggerFactory.getLogger(HtmlCollection.class);
@@ -23,7 +20,6 @@ public class HtmlCollection implements CartoonCollectionService {
     private final RenderService renderService;
 
 
-    @Autowired
     public HtmlCollection(FileSystemPersistenceService persistenceService, RenderService renderService) {
         this.persistenceService = persistenceService;
         this.renderService = renderService;

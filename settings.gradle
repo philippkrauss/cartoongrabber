@@ -1,1 +1,1 @@
-include "cartoongrabber-base", "cartoongrabber-cli"
+include "cartoongrabber-base", "cartoongrabber-cli", "cartoongrabber-web"
