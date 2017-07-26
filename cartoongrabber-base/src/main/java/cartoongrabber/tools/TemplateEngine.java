@@ -13,7 +13,6 @@ import java.util.Properties;
 /**
  * Uses apache velocity template engine to render a list of {@link CartoonStrip} into HTML format.
  */
-@Component
 public class TemplateEngine implements RenderService {
 
     private final Template template;

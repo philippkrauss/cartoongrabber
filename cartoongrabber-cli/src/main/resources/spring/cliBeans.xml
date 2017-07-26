@@ -9,9 +9,11 @@
         <!--<constructor-arg ref="persistenceService" />-->
     <!--</bean>-->
 
+    <bean id="renderService" class="cartoongrabber.tools.TemplateEngine"/>
+
     <bean id="htmlCollection" class="cartoongrabber.backend.HtmlCollection">
         <constructor-arg ref="persistenceService" />
-        <constructor-arg ref="templateEngine" />
+        <constructor-arg ref="renderService" />
     </bean>
 
     <bean id="persistenceService" class="cartoongrabber.tools.FileSystemPersistenceImpl"/>

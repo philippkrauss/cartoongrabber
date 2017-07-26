@@ -18,13 +18,15 @@ public class InMemoryCartoonCollector implements CartoonCollectionService {
     @Override
     public void collect(List<CartoonStrip> cartoons) {
         collectedCartoons.addAll(cartoons);
-        log.debug("collecting {} cartoons. Total size is {}", cartoons.size(), collectedCartoons.size());
+        log.debug("collecting [{}] cartoons. Total size is [{}]", cartoons.size(), collectedCartoons.size());
     }
 
     public List<CartoonStrip> getCollectedCartoons() {
-        List<CartoonStrip> ret = new ArrayList<>(collectedCartoons);
+        return new ArrayList<>(collectedCartoons);
+    }
+
+    public void clear() {
         collectedCartoons.clear();
-        return ret;
     }
 
 }

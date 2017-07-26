@@ -5,6 +5,7 @@ mainClassName = 'cartoongrabber.Main'
 
 dependencies {
     compile project(':cartoongrabber-base')
+    runtime "org.slf4j:jcl-over-slf4j:1.7.21"
     runtime "ch.qos.logback:logback-classic:1.1.7"
     compile 'net.sf.jopt-simple:jopt-simple:4.9'
 }

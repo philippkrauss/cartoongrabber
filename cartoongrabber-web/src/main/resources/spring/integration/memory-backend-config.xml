@@ -8,5 +8,5 @@
 
     <beans:import resource="classpath*:/spring/integration/integration-config.xml"/>
 
-    <int:service-activator input-channel="aggregatedCartoonsChannel" ref="inMemoryCartoonCollector"/>
+    <int:service-activator input-channel="aggregatedCartoonsChannel" ref="inMemoryCartoonCollector" method="collect"/>
 </beans>
