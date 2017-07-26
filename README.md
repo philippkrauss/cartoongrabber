@@ -10,6 +10,7 @@ It started with the need to learn about [spring-integration](https://projects.sp
 and continued with different other frameworks and tools.
 
 Currently in use are
+* [Gradle](https://gradle.org/)
 * [spring-integration](https://projects.spring.io/spring-integration)
 * [spring](https://projects.spring.io/spring-framework/) for IOC
 * [Travis Ci](https://travis-ci.org/)
