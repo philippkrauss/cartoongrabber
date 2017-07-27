@@ -16,15 +16,19 @@ public class TestTools {
         assertEquals(expectedString, actualString);
     }
 
-    public static CartoonStrip createCartoon() {
+    public static CartoonStrip createCartoon(String modifier) {
         try {
-            return new CartoonStrip("dilbert",
-                    new URL("http", "www.dilbert.com", "/"),
-                    new URL("http", "www.dilbert.com", "/myImage"),
+            return new CartoonStrip("dilbert" + modifier,
+                    new URL("http", "www.dilbert.com", "/" + modifier),
+                    new URL("http", "www.dilbert.com", "/myImage" + modifier),
                     new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_INDEXED),
-                    LocalDate.of(2000, 1, 17));
+                    LocalDate.of(2000, 1, (modifier.hashCode() % 30) + 1));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static CartoonStrip createCartoon() {
+         return createCartoon("");
     }
 }

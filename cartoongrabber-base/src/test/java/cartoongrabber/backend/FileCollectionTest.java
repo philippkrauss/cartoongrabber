@@ -52,13 +52,13 @@ public class FileCollectionTest {
     @Test
     public void testCreateDirectory() throws Exception {
         fileCollection.collect(oneCartoon);
-        assertEquals(fileSystemPersistence.createdDirectory, "2000-01-17");
+        assertEquals(fileSystemPersistence.createdDirectory, oneCartoon.get(0).getDate().toString());
     }
 
     @Test
     public void testStoreImage() {
         fileCollection.collect(oneCartoon);
-        assertEquals(fileSystemPersistence.directoryName, "2000-01-17");
+        assertEquals(fileSystemPersistence.directoryName, oneCartoon.get(0).getDate().toString());
         assertEquals(fileSystemPersistence.imageName, "dilbert");
         imageEquals(oneCartoon.get(0).getImage(), fileSystemPersistence.image);
     }
@@ -66,7 +66,7 @@ public class FileCollectionTest {
     @Test
     public void testStoreText() {
         fileCollection.collect(oneCartoon);
-        assertEquals(fileSystemPersistence.directoryName, "2000-01-17");
+        assertEquals(fileSystemPersistence.directoryName, oneCartoon.get(0).getDate().toString());
         assertEquals(fileSystemPersistence.textFileName, "dilbert.txt");
         assertNotNull(fileSystemPersistence.text);
     }

@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -28,7 +27,7 @@ public class FileCollection implements CartoonCollectionService {
             throw new RuntimeException("empty cartoon list, cannot render!");
         }
         LocalDate date = cartoons.get(0).getDate();
-        String directoryName = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String directoryName = date.toString();
         persistenceService.createDirectory(directoryName);
 
         for (CartoonStrip cartoon : cartoons) {
