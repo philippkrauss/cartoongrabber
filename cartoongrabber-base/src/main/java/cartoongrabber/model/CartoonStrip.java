@@ -1,6 +1,5 @@
 package cartoongrabber.model;
 
-import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.time.LocalDate;
 

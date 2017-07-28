@@ -1,6 +1,6 @@
 package cartoongrabber.tools;
 
-import java.awt.image.BufferedImage; /**
+/**
  * This interface provides some level of Filesystem abstraction
  * Created by Philipp Krauß on 18.07.2017.
  */

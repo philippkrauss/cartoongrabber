@@ -3,8 +3,6 @@ package cartoongrabber.tools;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;

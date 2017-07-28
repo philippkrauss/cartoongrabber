@@ -2,11 +2,8 @@ package cartoongrabber.tools;
 
 import cartoongrabber.model.CartoonStrip;
 
-import java.awt.image.BufferedImage;
 import java.net.URL;
 import java.time.LocalDate;
-
-import static org.junit.Assert.assertEquals;
 
 public class TestTools {
 

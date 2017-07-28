@@ -1,6 +1,5 @@
 package cartoongrabber.web.service;
 
-import cartoongrabber.model.CartoonStrip;
 import cartoongrabber.tools.redis.MockJedisFactory;
 import cartoongrabber.tools.redis.RedisStore;
 import org.junit.Before;
