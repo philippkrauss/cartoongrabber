@@ -29,5 +29,5 @@ You can also create a distribution zip file by executing
 will find the created distribution archive in the path 
 `cartoongrabber-cli/build/distributions`.
 
-The second flavor is currently under development. The CLI will be extended into a web
-application that gives access to the grabbed cartoons.
+The second flavor is a web application that gives access to the grabbed cartoons. You
+can run the web application by executing `gradlew :cartoongrabber-web:bootRun`

@@ -5,10 +5,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="cartoongrabber"/>
 
-    <!--<bean class="cartoongrabber.backend.FileCollection">-->
-        <!--<constructor-arg ref="persistenceService" />-->
-    <!--</bean>-->
-
     <bean id="renderService" class="cartoongrabber.tools.TemplateEngine"/>
 
     <bean id="htmlCollection" class="cartoongrabber.backend.HtmlCollection">

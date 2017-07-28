@@ -10,7 +10,6 @@
     <beans:import resource="classpath*:/spring/integration/integration-gateway.xml"/>
     <context:component-scan base-package="cartoongrabber"/>
 
-    <!--<bean id="renderService" class="cartoongrabber.tools.TemplateEngine "/>-->
     <bean class="cartoongrabber.tools.DateServiceImpl"/>
     <bean class="cartoongrabber.tools.UrlDownloaderServiceImpl"/>
 
@@ -32,7 +31,5 @@
     <bean id="releaseStrategy" class="org.springframework.integration.aggregator.SequenceSizeReleaseStrategy" />
 
     <int:publish-subscribe-channel id="aggregatedCartoonsChannel"/>
-
-    <!--<int:service-activator input-channel="aggregatedCartoonsChannel" ref="fileCollection"/>-->
 
 </beans>

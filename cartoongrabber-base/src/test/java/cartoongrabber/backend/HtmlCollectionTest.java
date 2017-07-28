@@ -15,7 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static cartoongrabber.tools.TestTools.createCartoon;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath*:/spring/integration/integration-config-test.xml")
@@ -67,7 +68,6 @@ public class HtmlCollectionTest {
     public void testFilename() {
         htmlCollection.collect(oneCartoon);
         assertEquals("cartoons.html", fileSystemPersistence.textFileName);
-        assertNull(fileSystemPersistence.directoryName);
     }
 
 }

@@ -17,7 +17,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
 
-import static cartoongrabber.tools.TestTools.imageEquals;
 import static org.junit.Assert.*;
 
 /**
@@ -76,15 +75,6 @@ public class DefinitionToCartoonTransformerTest {
         CartoonStrip strip = transformer.transform(source);
         assertEquals(new URL("http://test.com/2000-01-25"), strip.getSourceUrl());
         assertEquals(new URL("http://test.com/2000-01-25"), mockDownloaderService.getUrls().get(0));
-    }
-
-    @Test
-    public void downloadImageFromUrl() throws Exception {
-        CartoonStrip strip = transformer.transform(source);
-        assertEquals(2, mockDownloaderService.getUrls().size());
-        assertEquals(new URL("http://here.com"), mockDownloaderService.getUrls().get(1));
-        //image objects have to equals method, therefore comparing String version without object ID)
-        imageEquals(image, strip.getImage());
     }
 
 }

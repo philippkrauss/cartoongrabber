@@ -13,14 +13,12 @@ public class CartoonStrip {
     private final String name;
     private final URL sourceUrl;
     private final URL imageUrl;
-    private final BufferedImage image;
     private final LocalDate date;
 
-    public CartoonStrip(String name, URL sourceUrl, URL imageUrl, BufferedImage image, LocalDate date) {
+    public CartoonStrip(String name, URL sourceUrl, URL imageUrl, LocalDate date) {
         this.name = name;
         this.sourceUrl = sourceUrl;
         this.imageUrl = imageUrl;
-        this.image = image;
         this.date = date;
     }
 
@@ -37,16 +35,13 @@ public class CartoonStrip {
         return "CartoonStrip{" +
                 "name='" + name + '\'' +
                 ", sourceUrl=" + sourceUrl +
-                ", image=" + image +
+                ", imageUrl=" + imageUrl +
+                ", date=" + date +
                 '}';
     }
 
     public String getName() {
         return name;
-    }
-
-    public BufferedImage getImage() {
-        return image;
     }
 
     public URL getImageUrl() {

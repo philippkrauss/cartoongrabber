@@ -5,15 +5,11 @@ import cartoongrabber.model.SourceDefinition;
 import cartoongrabber.tools.DateService;
 import cartoongrabber.tools.MarkupDateFormatter;
 import cartoongrabber.tools.UrlDownloaderService;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -55,21 +51,7 @@ public class DefinitionToCartoonTransformer {
         URL baseUrl = formatBaseUrl(source.getBaseUrl(), date);
         String webPage = fetchBaseUrl(baseUrl);
         URL imgUrl = extractImgUrl(webPage, source.getImagePattern());
-        BufferedImage image = downloadImage(imgUrl);
-        return new CartoonStrip(source.getName(), baseUrl, imgUrl, image, date);
-    }
-
-    private BufferedImage downloadImage(URL imgUrl) {
-        ByteArrayInputStream in = null;
-        try {
-            byte[] downloadedBytes = downloaderService.download(imgUrl);
-            in = new ByteArrayInputStream(downloadedBytes);
-            return ImageIO.read(in);
-        } catch (IOException e) {
-            throw new RuntimeException("Could not download image from " + imgUrl, e);
-        } finally {
-            IOUtils.closeQuietly(in);
-        }
+        return new CartoonStrip(source.getName(), baseUrl, imgUrl, date);
     }
 
     private URL extractImgUrl(String content, String imagePattern) {

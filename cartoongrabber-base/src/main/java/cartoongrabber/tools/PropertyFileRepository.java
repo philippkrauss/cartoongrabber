@@ -44,7 +44,7 @@ public class PropertyFileRepository implements SourcePropertyRepositoryService {
 
     }
 
-    private void loadFromReader(Reader reader) throws Exception {
+    private void loadFromReader(Reader reader) {
         SourcePropertyParser parser = new SourcePropertyParser();
         Map<String, Properties> parsedProperties = parser.parse(reader);
         properties.putAll(parsedProperties);

@@ -36,38 +36,6 @@ public class FileSystemPersistenceImpl implements FileSystemPersistenceService {
     }
 
     @Override
-    public void createDirectory(String name) {
-        File newDirectory = new File(getBasePath(), name);
-        if (newDirectory.exists() && newDirectory.isDirectory()) {
-            return;
-        }
-        boolean created = newDirectory.mkdir();
-        if (!created) {
-            throw new RuntimeException("Could not create directory " + newDirectory);
-        }
-    }
-
-    @Override
-    public void storeImage(String directoryName, String imageName, BufferedImage image) {
-        File destination = createDestination(directoryName, imageName, "jpg");
-        try {
-            ImageIO.write(image, "jpg", destination);
-        } catch (IOException e) {
-            throw new RuntimeException("Error when storing image [" + imageName + "] to destination [" + destination + "]", e);
-        }
-    }
-
-    private File createDestination(String directoryName, String imageName, String ending) {
-        return new File(new File(getBasePath(), directoryName), imageName + ((ending != null)?"." + ending:""));
-    }
-
-    @Override
-    public void storeTextFile(String directoryName, String textFileName, String text) {
-        File destination = createDestination(directoryName, textFileName, null);
-        writeText(destination, text);
-    }
-
-    @Override
     public void storeTextFile(String textFileName, String text) {
         File destination = new File(getBasePath(), textFileName);
         writeText(destination, text);

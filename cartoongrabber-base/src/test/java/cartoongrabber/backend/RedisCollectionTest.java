@@ -20,7 +20,7 @@ public class RedisCollectionTest {
     RedisCollection redisCollection;
 
     private final List<CartoonStrip> oneCartoon = Collections.singletonList(createCartoon());
-    private final List<CartoonStrip> twoCartoons = Arrays.asList(createCartoon("a"), createCartoon("b"));
+    private final List<CartoonStrip> twoCartoons = Arrays.asList(createCartoon(1), createCartoon(2));
 
     @Before
     public void setUp() {
