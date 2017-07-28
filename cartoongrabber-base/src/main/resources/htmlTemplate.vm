@@ -1,3 +1,4 @@
+#if(!$cartoons.isEmpty())
 <!doctype html>
 
 <html lang="en">
@@ -9,15 +10,16 @@
 <body>
 <h1>Cartoons for $cartoons.get(0).getDate()</h1>
 created by <a href="https://github.com/philippkrauss/cartoongrabber">cartoongrabber</a><br/><br/>
-#foreach($cartoon in $cartoons)
-<a href="#ref_$cartoon.name.hashCode()">$cartoon.name</a><br/>
-#end
+    #foreach($cartoon in $cartoons)
+    <a href="#ref_$cartoon.name.hashCode()">$cartoon.name</a><br/>
+    #end
 
-#foreach($cartoon in $cartoons)
-<h1 id="ref_$cartoon.name.hashCode()">$cartoon.name</h1>
-<img src="$cartoon.imageUrl"/>
-<br/>
-#end
+    #foreach($cartoon in $cartoons)
+    <h1 id="ref_$cartoon.name.hashCode()">$cartoon.name</h1>
+    <img src="$cartoon.imageUrl"/>
+    <br/>
+    #end
 
 </body>
 </html>
+#end

@@ -1,4 +1,4 @@
-package cartoongrabber.web;
+package cartoongrabber.web.controller;
 
 import cartoongrabber.backend.InMemoryCartoonCollector;
 import cartoongrabber.model.CartoonStrip;
@@ -8,16 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 @Controller
-public class CartoonController {
+public class SimpleCartoonController {
 
-    private final Logger log = LoggerFactory.getLogger(CartoonController.class);
+    private final Logger log = LoggerFactory.getLogger(SimpleCartoonController.class);
 
     @Autowired
     private GrabberService grabberService;
@@ -28,11 +27,10 @@ public class CartoonController {
     @Autowired
     private RenderService renderService;
 
-    @RequestMapping("/cartoons")
+    @RequestMapping("/simplecartoons")
     @ResponseBody
-    public String loadCartoons(Model model) {
+    public String loadCartoons() {
         log.debug("loading cartoons");
-        model.addAttribute("name", "value");
         grabberService.grab("all");
         List<CartoonStrip> cartoons = cartoonCollector.getCollectedCartoons();
         cartoonCollector.clear();

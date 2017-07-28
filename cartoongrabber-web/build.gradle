@@ -17,7 +17,9 @@ mainClassName = 'cartoongrabber.web.WebApplication'
 
 dependencies {
     compile project(':cartoongrabber-base')
-    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+    compile("org.springframework.boot:spring-boot-starter-freemarker")
     compile("org.springframework.boot:spring-boot-devtools")
     runtime "org.slf4j:jcl-over-slf4j:1.7.21"
+
+    testCompile project (path: ":cartoongrabber-base", configuration: 'testArtifacts')
 }

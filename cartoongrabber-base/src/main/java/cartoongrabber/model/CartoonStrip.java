@@ -47,4 +47,26 @@ public class CartoonStrip {
     public URL getImageUrl() {
         return imageUrl;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CartoonStrip that = (CartoonStrip) o;
+
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (sourceUrl != null ? !sourceUrl.equals(that.sourceUrl) : that.sourceUrl != null) return false;
+        if (imageUrl != null ? !imageUrl.equals(that.imageUrl) : that.imageUrl != null) return false;
+        return date != null ? date.equals(that.date) : that.date == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (sourceUrl != null ? sourceUrl.hashCode() : 0);
+        result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        return result;
+    }
 }

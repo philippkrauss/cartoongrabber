@@ -18,7 +18,7 @@ public class JedisFactoryImpl implements JedisFactoryService {
     public Jedis createJedis() {
         try {
             URI redisURI = new URI(redisUrl);
-            log.debug("redis URI: [{}]", redisURI);
+            log.info("redis URI: [{}]", redisURI);
             Jedis jedis = new Jedis(redisURI);
             String ping = jedis.ping();
             log.debug("pinged jedis. Result: [{}]", ping);

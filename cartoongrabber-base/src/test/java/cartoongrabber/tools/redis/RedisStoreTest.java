@@ -6,17 +6,23 @@ import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
+
 import static cartoongrabber.tools.TestTools.createCartoon;
+import static cartoongrabber.tools.redis.RedisStore.SOURCE_URL;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class RedisStoreTest {
 
-    MockJedis jedis = null;
-    RedisStore store = null;
-    CartoonStrip cartoon1 = null;
-    CartoonStrip cartoon2 = null;
+    private MockJedis jedis = null;
+    private RedisStore store = null;
+    private CartoonStrip cartoon1 = null;
+    private CartoonStrip cartoon2 = null;
 
     @Before
     public void setUp() {
@@ -107,5 +113,42 @@ public class RedisStoreTest {
         assertFalse(jedis.exists("cartoons_for:" + first.getDate().toEpochDay()));
         assertFalse(jedis.exists("cartoon:1"));
     }
+
+    @Test
+    public void testReadDatesEmpty() {
+        assertTrue(store.readDates().isEmpty());
+    }
+
+    @Test
+    public void testReadDates() {
+        store.store(cartoon1);
+        Collection<LocalDate> dates = store.readDates();
+        assertTrue(dates.contains(cartoon1.getDate()));
+        assertEquals(1, dates.size());
+    }
+
+    @Test
+    public void testReadEmptyCartoonsForDate() {
+        List<CartoonStrip> cartoons = store.readCartoonsForDate(LocalDate.now());
+        assertNotNull(cartoons);
+        assertTrue(cartoons.isEmpty());
+    }
+
+    @Test
+    public void testReadCartoonsForDate() {
+        store.store(cartoon1);
+        List<CartoonStrip> cartoons = store.readCartoonsForDate(cartoon1.getDate());
+        assertEquals(1, cartoons.size());
+        assertEquals(cartoon1, cartoons.get(0));
+    }
+
+    @Test
+    public void testReadBadCartoon() {
+        store.store(cartoon1);
+        jedis.hset("cartoon:1", SOURCE_URL, "this is not a URL");
+        List<CartoonStrip> cartoons = store.readCartoonsForDate(cartoon1.getDate());
+        assertEquals(0, cartoons.size());
+    }
+
 
 }

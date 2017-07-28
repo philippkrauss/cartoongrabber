@@ -6,4 +6,20 @@
     <bean class="cartoongrabber.tools.TemplateEngine"/>
     <bean class="cartoongrabber.tools.PropertyFileRepository" init-method="loadRepoFromResource"/>
 
+
+    <bean class="java.net.URI" id="redisUrl">
+        <constructor-arg value="${redis}"/>
+    </bean>
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="minIdle" value="1"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" ref="redisUrl"/>
+    </bean>
+
+    <bean id="jedisFactory" class="cartoongrabber.web.service.PooledJedisFactory" />
+
 </beans>

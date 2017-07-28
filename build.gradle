@@ -23,5 +23,19 @@ subprojects {
     jar {
         manifest.attributes provider: 'gradle'
     }
+    //The following section is necessary to get dependencies between projects in test scope.
+    //Example: cartoongrabber-web tests use a mock defined in cartoongrabber-base
+    configurations {
+        testArtifacts.extendsFrom testRuntime
+    }
+    task testJar(type: Jar) {
+        classifier "test"
+        from sourceSets.test.output
+    }
+
+    artifacts {
+        testArtifacts testJar
+    }
+    //test dependencies section end
 
 }

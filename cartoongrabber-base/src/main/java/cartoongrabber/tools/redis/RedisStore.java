@@ -5,9 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class RedisStore {
 
@@ -16,10 +17,10 @@ public class RedisStore {
     private static final String NEXT_CARTOON_ID = "next_cartoon_id";
     private static final String CARTOON_PREFIX = "cartoon:";
     private static final String NAME = "name";
-    private static final String SOURCE_URL = "sourceUrl";
+    public static final String SOURCE_URL = "sourceUrl";
     private static final String DATE = "date";
     private static final String IMAGE_URL = "imageUrl";
-    private static final String DATES = "dates";
+    public static final String DATES = "dates";
     private static final String CARTOONS_FOR_PREFIX = "cartoons_for:";
 
     private static final int MAX_MEMBERS = 30;
@@ -73,7 +74,43 @@ public class RedisStore {
         }
         return createId();
     }
+
     private String createId() {
         return CARTOON_PREFIX + jedis.incr(NEXT_CARTOON_ID);
     }
+
+    public Collection<LocalDate> readDates() {
+        log.debug("reading dates from redis");
+        Set<String> dates = jedis.smembers(DATES);
+        log.debug("found dates [{}]", dates);
+        return dates.stream()
+                .map(date -> LocalDate.ofEpochDay(Long.valueOf(date)))
+                .collect(Collectors.toList());
+    }
+
+    public List<CartoonStrip> readCartoonsForDate(LocalDate date) {
+        String key = CARTOONS_FOR_PREFIX + date.toEpochDay();
+        if (!jedis.exists(key)) {
+            return Collections.emptyList();
+        }
+        List<CartoonStrip> ret = new ArrayList<>();
+        for (String id : jedis.smembers(key)) {
+            try {
+                ret.add(loadCartoon(id));
+            } catch (Exception e) {
+                log.warn("cannot load cartoon ID [{}]. Skipping!", id, e);
+            }
+        }
+        return ret;
+    }
+
+    private CartoonStrip loadCartoon(String id) throws Exception {
+        Map<String, String> cartoonMap = jedis.hgetAll(id);
+        String name = cartoonMap.get(NAME);
+        URL sourceUrl = new URL(cartoonMap.get(SOURCE_URL));
+        URL imageUrl = new URL(cartoonMap.get(IMAGE_URL));
+        LocalDate date = LocalDate.ofEpochDay(Long.valueOf(cartoonMap.get(DATE)));
+        return new CartoonStrip(name, sourceUrl, imageUrl, date);
+    }
+
 }

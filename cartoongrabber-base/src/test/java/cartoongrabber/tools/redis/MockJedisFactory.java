@@ -5,11 +5,10 @@ import redis.clients.jedis.Jedis;
 
 public class MockJedisFactory implements JedisFactoryService {
 
-    public MockJedis jedis = null;
+    public MockJedis jedis = new MockJedis("test");
 
     @Override
     public Jedis createJedis() {
-        jedis = new MockJedis("test");
         return jedis;
     }
 }
