@@ -12,9 +12,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.net.URL;
 
 import static org.junit.Assert.*;
@@ -37,15 +34,11 @@ public class DefinitionToCartoonTransformerTest {
     private MockDateServiceImpl mockDateService;
 
     private SourceDefinition source = null;
-    private final BufferedImage image = new BufferedImage(10, 10, BufferedImage.TYPE_BYTE_INDEXED);
 
     @Before
     public void setUp() throws Exception {
         mockDownloaderService.addContent("download image from:\"http://here.com\"".getBytes());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ImageIO.write(image, "png", out);
-        mockDownloaderService.addContent(out.toByteArray());
-        source = new SourceDefinition("testing", "http://test.com/<yyyy>-<MM>-<dd>", "from:\"([^\"].*)\"");
+        source = SourceDefinition.patternSource("testing", "http://test.com/<yyyy>-<MM>-<dd>", "from:\"([^\"].*)\"");
         mockDateService.setDate(2000, 1, 25);
     }
 
@@ -75,6 +68,20 @@ public class DefinitionToCartoonTransformerTest {
         CartoonStrip strip = transformer.transform(source);
         assertEquals(new URL("http://test.com/2000-01-25"), strip.getSourceUrl());
         assertEquals(new URL("http://test.com/2000-01-25"), mockDownloaderService.getUrls().get(0));
+    }
+
+    @Test
+    public void testImagePattern() throws Exception {
+        CartoonStrip strip = transformer.transform(source);
+        assertEquals(new URL("http://here.com"), strip.getImageUrl());
+    }
+
+    @Test
+    public void directImagePattern() throws Exception {
+        SourceDefinition directSource = SourceDefinition.directSource("testing", "http://test.com/<yyyy>/<MM>/<dd>", "http://test.com/<yyyy>-<MM>-<dd>/image.jpg");
+        CartoonStrip strip = transformer.transform(directSource);
+        assertEquals(new URL("http://test.com/2000/01/25"), strip.getSourceUrl());
+        assertEquals(new URL("http://test.com/2000-01-25/image.jpg"), strip.getImageUrl());
     }
 
 }

@@ -1,7 +1,6 @@
 package cartoongrabber.web.controller;
 
 import cartoongrabber.model.CartoonStrip;
-import cartoongrabber.tools.RenderService;
 import cartoongrabber.web.service.CartoonPersistenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +13,6 @@ import java.util.*;
 
 @Controller
 public class CartoonController {
-
-    @Autowired
-    private RenderService renderService;
 
     @Autowired
     private CartoonPersistenceService persistenceService;

@@ -49,9 +49,19 @@ public class DefinitionToCartoonTransformer {
         LocalDate date = dateService.getDate();
         log.debug("transforming source definition [{}] to cartoon strip", source);
         URL baseUrl = formatBaseUrl(source.getBaseUrl(), date);
-        String webPage = fetchBaseUrl(baseUrl);
-        URL imgUrl = extractImgUrl(webPage, source.getImagePattern());
+        URL imgUrl = getImgUrl(baseUrl, source, date);
         return new CartoonStrip(source.getName(), baseUrl, imgUrl, date);
+    }
+
+    private URL getImgUrl(URL baseUrl, SourceDefinition source, LocalDate date) {
+        URL imgUrl;
+        if (source.isPattern()) {
+            String webPage = fetchBaseUrl(baseUrl);
+            imgUrl = extractImgUrl(webPage, source.getImagePattern());
+        } else {
+            imgUrl = formatBaseUrl(source.getImageUrl(), date);
+        }
+        return imgUrl;
     }
 
     private URL extractImgUrl(String content, String imagePattern) {

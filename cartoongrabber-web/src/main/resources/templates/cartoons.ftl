@@ -16,9 +16,10 @@ created by <a href="https://github.com/philippkrauss/cartoongrabber">cartoongrab
 </#list>
 <#list cartoons as cartoon>
 <h1 id="ref_${cartoon.name}">${cartoon.name}</h1>
-<img src="${cartoon.imageUrl}"/>
+<img src="${cartoon.imageUrl}"/><br/>
+Downloaded from <a href="${cartoon.sourceUrl}">${cartoon.sourceUrl}</a>
 <br/>
 </#list>
-
+<br/><a href="dates">Back to date selection...</a>
 </body>
 </html>
