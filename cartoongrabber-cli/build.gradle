@@ -19,3 +19,12 @@ distributions {
         }
     }
 }
+
+
+task copyCli(type: Copy) {
+    dependsOn   'distTar'
+    from        "build/distributions/cartoongrabber-cli-${project.version}.tar"
+    into        '../integration-test/build/docker'
+}
+
+build.dependsOn copyCli

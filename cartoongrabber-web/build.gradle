@@ -23,3 +23,14 @@ dependencies {
 
     testCompile project (path: ":cartoongrabber-base", configuration: 'testArtifacts')
 }
+
+task copyJar(type: Copy) {
+    dependsOn   'jar'
+    from        "build/libs/cartoongrabber-web-${project.version}.jar"
+    into        'build/docker'
+    rename { String fileName ->
+        fileName.replace("-${project.version}", "")
+    }
+}
+
+build.dependsOn copyJar
