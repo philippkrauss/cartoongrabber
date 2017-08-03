@@ -23,8 +23,13 @@ public class MockDownloaderServiceImpl implements UrlDownloaderService {
         this.content.add(content);
     }
 
+    public boolean throwException = false;
+
     @Override
     public byte[] download(URL url) throws IOException {
+        if (throwException) {
+            throw new IOException();
+        }
         urls.add(url);
         return content.poll();
     }
