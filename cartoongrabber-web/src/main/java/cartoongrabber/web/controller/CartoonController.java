@@ -14,23 +14,32 @@ import java.util.*;
 @Controller
 public class CartoonController {
 
+    private final CartoonPersistenceService persistenceService;
+
     @Autowired
-    private CartoonPersistenceService persistenceService;
+    public CartoonController(CartoonPersistenceService persistenceService) {
+        this.persistenceService = persistenceService;
+    }
 
     @RequestMapping("/cartoons")
     public String getCartoons(@RequestParam(value="date", required=false) String date, Model model) {
-        LocalDate selectedDate;
-        if (date != null) {
-            selectedDate = LocalDate.parse(date);
-        } else {
-            SortedSet<LocalDate> dates = new TreeSet<>(persistenceService.getDates());
-            selectedDate = dates.isEmpty()?LocalDate.now():dates.last();
-        }
+        SortedSet<LocalDate> availableDates = new TreeSet<>(persistenceService.getDates());
+        LocalDate selectedDate = getSelectedDate(availableDates, date);
         List<CartoonStrip> cartoons = persistenceService.getCartoonsForDate(selectedDate);
         cartoons.sort(Comparator.comparing(CartoonStrip::getName));
         model.addAttribute("cartoons", cartoons);
         model.addAttribute("date", selectedDate);
         return "cartoons";
+    }
+
+    private LocalDate getSelectedDate(SortedSet<LocalDate> availableDates, String date) {
+        LocalDate selectedDate;
+        if (date != null) {
+            selectedDate = LocalDate.parse(date);
+        } else {
+            selectedDate = availableDates.isEmpty()?LocalDate.now():availableDates.last();
+        }
+        return selectedDate;
     }
 
     @RequestMapping("/dates")
