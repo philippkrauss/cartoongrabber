@@ -61,7 +61,7 @@ public class CartoonController {
     }
 
     @RequestMapping("/dates")
-    public String getList(Model model) {
+    public String getDates(Model model) {
         log.info("get dates");
         Collection<LocalDate> dates = persistenceService.getDates();
         model.addAttribute("dates", dates);

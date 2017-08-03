@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static cartoongrabber.tools.TestTools.createCartoon;
@@ -106,5 +107,12 @@ public class CartoonControllerTest {
 
     private List<CartoonStrip> getCartoonsFromModel(Model model) {
         return (List<CartoonStrip>) model.asMap().get("cartoons");
+    }
+
+    @Test
+    public void testGetDates() {
+        mockPersistenceService.dates.add(LocalDate.of(2017, 8, 1));
+        cartoonController.getDates(model);
+        assertEquals(Collections.singletonList(LocalDate.of(2017, 8, 1)), model.asMap().get("dates"));
     }
 }
