@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/philippkrauss/cartoongrabber.svg?branch=master)](https://travis-ci.org/philippkrauss/cartoongrabber)
 
+[![Code Coverage](https://img.shields.io/codecov/c/github/philippkrauss/cartoongrabber/master.svg)](https://codecov.io/github/philippkrauss/cartoongrabber?branch=master)
+
 # cartoongrabber
 The main purpose of this pet project is to learn new technologies and have some fun 
 in the process. Therefore we came up with the idea of creating a cartoon grabber. The
