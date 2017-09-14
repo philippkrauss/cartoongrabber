@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static cartoongrabber.tools.TestTools.createCartoon;
+import static cartoongrabber.tools.TestTools.createErrorCartoon;
 import static cartoongrabber.tools.redis.RedisStore.SOURCE_URL;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
@@ -150,5 +151,20 @@ public class RedisStoreTest {
         assertEquals(0, cartoons.size());
     }
 
+    @Test
+    public void testStoreErrorCartoon() {
+        CartoonStrip errorCartoon = createErrorCartoon();
+        store.store(errorCartoon);
+        assertEquals("This is an error", jedis.hget("cartoon:1", "error"));
+    }
+
+    @Test
+    public void testLoadErrorCartoon() {
+        CartoonStrip errorCartoon = createErrorCartoon();
+        store.store(errorCartoon);
+        List<CartoonStrip> cartoons = store.readCartoonsForDate(errorCartoon.getDate());
+        assertEquals(1, cartoons.size());
+        assertEquals(cartoons.get(0), errorCartoon);
+    }
 
 }

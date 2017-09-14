@@ -21,6 +21,7 @@ public class RedisStore {
     private static final String DATE = "date";
     private static final String IMAGE_URL = "imageUrl";
     public static final String DATES = "dates";
+    public static final String ERROR = "error";
     private static final String CARTOONS_FOR_PREFIX = "cartoons_for:";
 
     private static final int MAX_MEMBERS = 30;
@@ -35,11 +36,15 @@ public class RedisStore {
         log.debug("storing cartoon [{}] for date [{}] in redis", cartoon.getName(), cartoon.getDate());
         String cartoonId = findCartoonId(cartoon);
         jedis.hset(cartoonId, NAME, cartoon.getName());
-        jedis.hset(cartoonId, SOURCE_URL, cartoon.getSourceUrl().toString());
         jedis.hset(cartoonId, DATE, Long.toString(cartoon.getDate().toEpochDay()));
-        jedis.hset(cartoonId, IMAGE_URL, cartoon.getImageUrl().toString());
         jedis.sadd(DATES, Long.toString(cartoon.getDate().toEpochDay()));
         jedis.sadd(CARTOONS_FOR_PREFIX + cartoon.getDate().toEpochDay(), cartoonId);
+        if (cartoon.hasError()) {
+            jedis.hset(cartoonId, ERROR, cartoon.getError());
+        } else {
+            jedis.hset(cartoonId, SOURCE_URL, cartoon.getSourceUrl().toString());
+            jedis.hset(cartoonId, IMAGE_URL, cartoon.getImageUrl().toString());
+        }
         garbageCollect();
     }
 
@@ -107,10 +112,15 @@ public class RedisStore {
     private CartoonStrip loadCartoon(String id) throws Exception {
         Map<String, String> cartoonMap = jedis.hgetAll(id);
         String name = cartoonMap.get(NAME);
-        URL sourceUrl = new URL(cartoonMap.get(SOURCE_URL));
-        URL imageUrl = new URL(cartoonMap.get(IMAGE_URL));
         LocalDate date = LocalDate.ofEpochDay(Long.valueOf(cartoonMap.get(DATE)));
-        return new CartoonStrip(name, sourceUrl, imageUrl, date);
+        if (cartoonMap.containsKey(ERROR)) {
+            String error = cartoonMap.get(ERROR);
+            return new CartoonStrip(name, date, error);
+        } else {
+            URL sourceUrl = new URL(cartoonMap.get(SOURCE_URL));
+            URL imageUrl = new URL(cartoonMap.get(IMAGE_URL));
+            return new CartoonStrip(name, sourceUrl, imageUrl, date);
+        }
     }
 
 }

@@ -16,7 +16,11 @@ created by <a href="https://github.com/philippkrauss/cartoongrabber">cartoongrab
 
     #foreach($cartoon in $cartoons)
     <h1 id="ref_$cartoon.name.hashCode()">$cartoon.name</h1>
-    <img src="$cartoon.imageUrl"/>
+        #if($cartoon.hasError())
+            Error: $cartoon.error<br/>
+        #else
+            <img src="$cartoon.imageUrl"/>
+        #end
     <br/>
     #end
 

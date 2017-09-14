@@ -21,4 +21,8 @@ public class TestTools {
     public static CartoonStrip createCartoon() {
          return createCartoon(0);
     }
+
+    public static CartoonStrip createErrorCartoon() {
+        return new CartoonStrip("name", LocalDate.of(2017, 9, 7), new RuntimeException("This is an error"));
+    }
 }

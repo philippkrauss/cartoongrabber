@@ -79,21 +79,21 @@ public class DefinitionToCartoonTransformerTest {
     @Test
     public void testCouldNotExtractImagePattern() {
         SourceDefinition badSource = SourceDefinition.patternSource("testing", "http://test.com", "does not match");
-        try {
-            CartoonStrip strip = transformer.transform(badSource);
-            fail("exception expected");
-        } catch (RuntimeException e) {
-        }
+        CartoonStrip strip = transformer.transform(badSource);
+        assertNotNull(strip.getError());
+        assertNotNull(strip.getDate());
+        assertEquals(badSource.getName(), strip.getName());
+        assertNull(strip.getImageUrl());
     }
 
     @Test
     public void testBadSourcePattern() {
         SourceDefinition badSource = SourceDefinition.patternSource("testing", "http://test.com", "[* this is not a regex");
-        try {
-            CartoonStrip strip = transformer.transform(badSource);
-            fail("exception expected");
-        } catch (RuntimeException e) {
-        }
+        CartoonStrip strip = transformer.transform(badSource);
+        assertNotNull(strip.getError());
+        assertNotNull(strip.getDate());
+        assertEquals(badSource.getName(), strip.getName());
+        assertNull(strip.getImageUrl());
     }
 
     @Test
@@ -107,22 +107,21 @@ public class DefinitionToCartoonTransformerTest {
     @Test
     public void testBadUrl() {
         SourceDefinition badSource = SourceDefinition.directSource("name", "this is not a URL", "this is also not a URL");
-        try {
-            transformer.transform(badSource);
-            fail("exception expected");
-        } catch (RuntimeException e) {
-        }
+        CartoonStrip strip = transformer.transform(badSource);
+        assertNotNull(strip.getError());
+        assertNotNull(strip.getDate());
+        assertEquals(badSource.getName(), strip.getName());
+        assertNull(strip.getImageUrl());
     }
 
     @Test
     public void ioExceptionWhenDownloading() {
         mockDownloaderService.throwException = true;
-        try {
-            transformer.transform(source);
-            fail("Exception expected");
-        } catch (RuntimeException e) {
-
-        }
+        CartoonStrip strip = transformer.transform(source);
+        assertNotNull(strip.getError());
+        assertNotNull(strip.getDate());
+        assertEquals(source.getName(), strip.getName());
+        assertNull(strip.getImageUrl());
     }
 
 }

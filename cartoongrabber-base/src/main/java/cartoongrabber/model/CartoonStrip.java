@@ -1,5 +1,7 @@
 package cartoongrabber.model;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import java.net.URL;
 import java.time.LocalDate;
 
@@ -13,12 +15,26 @@ public class CartoonStrip {
     private final URL sourceUrl;
     private final URL imageUrl;
     private final LocalDate date;
+    private final String error;
 
     public CartoonStrip(String name, URL sourceUrl, URL imageUrl, LocalDate date) {
         this.name = name;
         this.sourceUrl = sourceUrl;
         this.imageUrl = imageUrl;
         this.date = date;
+        this.error = null;
+    }
+
+    public CartoonStrip(String name, LocalDate date, Exception e) {
+        this(name, date, e.getMessage());
+    }
+
+    public CartoonStrip(String name, LocalDate date, String error) {
+        this.name = name;
+        this.sourceUrl = null;
+        this.imageUrl = null;
+        this.date = date;
+        this.error = error;
     }
 
     public URL getSourceUrl() {
@@ -29,6 +45,14 @@ public class CartoonStrip {
         return date;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public String getErrorHtml() {
+        return StringEscapeUtils.escapeHtml(error);
+    }
+
     @Override
     public String toString() {
         return "CartoonStrip{" +
@@ -36,6 +60,7 @@ public class CartoonStrip {
                 ", sourceUrl=" + sourceUrl +
                 ", imageUrl=" + imageUrl +
                 ", date=" + date +
+                ", error=" + error +
                 '}';
     }
 
@@ -57,7 +82,8 @@ public class CartoonStrip {
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (sourceUrl != null ? !sourceUrl.equals(that.sourceUrl) : that.sourceUrl != null) return false;
         if (imageUrl != null ? !imageUrl.equals(that.imageUrl) : that.imageUrl != null) return false;
-        return date != null ? date.equals(that.date) : that.date == null;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        return error != null ? error.equals(that.error) : that.error == null;
     }
 
     @Override
@@ -66,6 +92,11 @@ public class CartoonStrip {
         result = 31 * result + (sourceUrl != null ? sourceUrl.hashCode() : 0);
         result = 31 * result + (imageUrl != null ? imageUrl.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (error != null ? error.hashCode() : 0);
         return result;
+    }
+
+    public boolean hasError() {
+        return error != null;
     }
 }

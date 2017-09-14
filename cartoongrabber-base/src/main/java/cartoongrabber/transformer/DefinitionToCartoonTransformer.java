@@ -47,10 +47,15 @@ public class DefinitionToCartoonTransformer {
             throw new RuntimeException("Cannot transform null source to cartoon strip");
         }
         LocalDate date = dateService.getDate();
-        log.debug("transforming source definition [{}] to cartoon strip", source);
-        URL baseUrl = formatBaseUrl(source.getBaseUrl(), date);
-        URL imgUrl = getImgUrl(baseUrl, source, date);
-        return new CartoonStrip(source.getName(), baseUrl, imgUrl, date);
+        try {
+            log.debug("transforming source definition [{}] to cartoon strip", source);
+            URL baseUrl = formatBaseUrl(source.getBaseUrl(), date);
+            URL imgUrl = getImgUrl(baseUrl, source, date);
+            return new CartoonStrip(source.getName(), baseUrl, imgUrl, date);
+        } catch (Exception e) {
+            log.warn("encountered an exception when trying to download cartoon {}", source.getName(), e);
+            return new CartoonStrip(source.getName(), date, e);
+        }
     }
 
     private URL getImgUrl(URL baseUrl, SourceDefinition source, LocalDate date) {
