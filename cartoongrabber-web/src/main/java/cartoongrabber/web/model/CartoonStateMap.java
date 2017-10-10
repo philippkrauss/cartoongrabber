@@ -24,7 +24,7 @@ public class CartoonStateMap {
                 .collect(Collectors.toMap(CartoonStrip::getName, Function.identity()));
         for (CartoonStrip cartoon : cartoons) {
             CartoonStrip oldCartoon = cartoonsByName.get(cartoon.getName());
-            if (oldCartoon != null) {
+            if (oldCartoon != null && cartoon.getImageUrl() != null) {
                 isOldMap.put(cartoon, cartoon.getImageUrl().equals(oldCartoon.getImageUrl()));
             }
         }
